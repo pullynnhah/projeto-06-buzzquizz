@@ -1,3 +1,3 @@
-# Projeto 
+# Buzz Quizz
 
-> Você pode visualizar a página [aqui](https://p.driven-paulaabro.com).
+> Você pode visualizar a página [aqui](https://buzzquizz.driven-paulaabro.com).
