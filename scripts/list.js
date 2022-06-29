@@ -39,7 +39,7 @@ function quizzesHTML(quizArray) {
       <div class="gradient" onclick="playQuiz(${quiz.id})">
         <div class="image">
           <img src="${quiz.image}" />
-          <div class="overlay"></div>
+          <div class="overlay"></div>    
         </div>
         <p>${quiz.title}</p>
       </div>
@@ -65,6 +65,7 @@ function renderQuizzes(quizArray) {
 }
 
 function getQuizzes() {
+  renderLoading();
   const promise = axios.get(`${URI}/quizzes`);
   promise.then(response => renderQuizzes(response.data));
 }
