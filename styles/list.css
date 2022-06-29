@@ -64,6 +64,11 @@
   font-size: 30px;
 }
 
+.quiz-header ion-icon:hover {
+  color: #F17C77;
+  cursor: pointer;
+}
+
 .quiz-container {
   display: flex;
   flex-wrap: wrap;
@@ -133,6 +138,7 @@
   .user-quiz-box {
     margin-bottom: 77px;
   }
+
   .quiz-container {
     margin-bottom: 48px;
   }
