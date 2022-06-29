@@ -2,3 +2,4 @@
 function renderCreateQuiz() {
   alert("Create QUIZZ");
 }
+

@@ -12,3 +12,4 @@ function dump(key, value) {
 const URI = "https://mock-api.driven.com.br/api/v4/buzzquizz";
 const LOCAL_STORAGE_KEY = "buzz-quizz";
 const main = document.querySelector("main");
+

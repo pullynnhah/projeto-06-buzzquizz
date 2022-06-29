@@ -70,4 +70,4 @@ function getQuizzes() {
   promise.then(response => renderQuizzes(response.data));
 }
 
-getQuizzes();
+// getQuizzes();
