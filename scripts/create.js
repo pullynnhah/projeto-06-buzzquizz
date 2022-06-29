@@ -96,7 +96,6 @@ function renderSucessPage(image, title, id) {
 let quizzTitle = null;
 let quizzImage = null;
 let quizzQuestionNumber = null;
-let quizzLevelNumber = null;
 
 // TODO: deletar o conteúdo da variável abaixo quando possível
 let userQuiz = {
@@ -167,5 +166,6 @@ let userQuiz = {
     },
   ],
 };
-// renderCreateQuiz();
-saveQuizz();
+
+renderCreateQuiz();
+// saveQuizz();
