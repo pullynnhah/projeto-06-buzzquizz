@@ -64,9 +64,108 @@ function verifyLevelNumber() {
   return true;
 }
 
+function saveQuizz() {
+  renderLoading();
+  const promise = axios.post(`${URI}/quizzes`, userQuiz);
+  promise.then(response => {
+    const quiz = response.data;
+    dump(quiz.id, quiz.key);
+    renderSucessPage(quiz.image, quiz.title, quiz.id);
+  });
+}
+
+function renderSucessPage(image, title, id) {
+  main.innerHTML = `
+    <div class="quizz-sucess">
+      <h2>Seu quizz está pronto!</h2>
+      <div class="gradient">
+        <div class="image">
+          <img src="${image}" />
+          <div class="overlay"></div>    
+        </div>
+        <p>${title}</p>
+      </div>
+      <div class="sucess-btns">
+        <div class="sucess-btn red-btn" onclick="playQuiz(${id})">Acessar Quizz</div>
+        <div class="sucess-btn white-btn" onclick="getQuizzes()">Voltar pra home</div>
+      </div>
+    </div>
+  `;
+}
+
 let quizzTitle = null;
 let quizzImage = null;
 let quizzQuestionNumber = null;
 let quizzLevelNumber = null;
 
-renderCreateQuiz();
+// TODO: deletar o conteúdo da variável abaixo quando possível
+let userQuiz = {
+  title: "Título do quizz",
+  image: "https://http.cat/411.jpg",
+  questions: [
+    {
+      title: "Título da pergunta 1",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+    {
+      title: "Título da pergunta 2",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+    {
+      title: "Título da pergunta 3",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+  ],
+  levels: [
+    {
+      title: "Título do nível 1",
+      image: "https://http.cat/411.jpg",
+      text: "Descrição do nível 1",
+      minValue: 0,
+    },
+    {
+      title: "Título do nível 2",
+      image: "https://http.cat/412.jpg",
+      text: "Descrição do nível 2",
+      minValue: 50,
+    },
+  ],
+};
+// renderCreateQuiz();
+saveQuizz();

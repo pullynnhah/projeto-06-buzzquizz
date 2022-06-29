@@ -85,7 +85,7 @@
   border-radius: 5px;
 }
 
-.gradient:hover {
+.quiz-container .gradient:hover {
   cursor: pointer;
   filter: brightness(1.5);
 }
