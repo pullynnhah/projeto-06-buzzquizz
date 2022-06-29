@@ -34,6 +34,7 @@ function getValues() {
   let LevelNumberOk = verifyLevelNumber();
   if (titleOk && questionNumberOk && LevelNumberOk) {
     alert("tudo certo, vamos lá");
+    loadQuizzQuestions();
   } else {
     alert("rever dados");
   }
@@ -62,6 +63,34 @@ function verifyLevelNumber() {
     return false;
   }
   return true;
+}
+
+function loadQuizzQuestions() {
+  document.querySelector('main').innerHTML = `    <div class="quizz-questions">
+  <h2>Crie suas perguntas</h2>
+  <div class="all-questions">
+  </div>
+  <button> Prosseguir para criar níveis</button>
+</div>
+  `
+  let createQuestions = document.querySelector('.all-questions')
+  for (let i = 0; i < quizzQuestionNumber; i++) {
+    createQuestions.innerHTML += `        <div class="question">
+    <h3>Pergunta ${(i + 1)}</h3>
+    <input class="question-title" type="text" placeholder="Texto da pergunta">
+    <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
+    <h3>Resposta Correta</h3>
+    <input class="correct-answer" type="text" placeholder="Resposta correta">
+    <input class="correct-answer-image" type="text" placeholder="URL da imagem">
+    <h3>Respostas incorretas</h3>
+    <input class="wrong-answer" type="text" placeholder="Resposta incorreta 1">
+    <input class="wrong-answer-image" type="text" placeholder="URL da imagem 1">
+    <input class="wrong-answer" type="text" placeholder="Resposta incorreta 2">
+    <input class="wrong-answer-image" type="text" placeholder="URL da imagem 2">
+    <input class="wrong-answer" type="text" placeholder="Resposta incorreta 3">
+    <input class="wrong-answer-image" type="text" placeholder="URL da imagem 3">
+  </div>`
+  }
 }
 
 function saveQuizz() {
