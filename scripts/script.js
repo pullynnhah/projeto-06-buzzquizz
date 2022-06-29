@@ -1,6 +1,5 @@
 function load() {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-  console.log(data);
   return data ? JSON.parse(data) : {};
 }
 

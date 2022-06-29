@@ -1,3 +1,3 @@
 function playQuiz(id) {
-  alert("Missing implementation! " + id);
+  alert(id);
 }

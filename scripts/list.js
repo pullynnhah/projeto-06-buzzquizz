@@ -52,7 +52,7 @@ function quizzesHTML(quizArray) {
 
 function renderQuizzes(quizArray) {
   const data = load();
-  const idUserQuizzes = Object.keys(data);
+  const idUserQuizzes = Object.keys(data).map(key => Number(key));
   const generalQuizzes = quizArray.filter(quiz => !idUserQuizzes.includes(quiz.id));
   const userQuizzes = quizArray.filter(quiz => idUserQuizzes.includes(quiz.id));
 
