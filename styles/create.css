@@ -1,11 +1,14 @@
+/* ==================== QUIZZ CREATE PAGE 1 ====================*/
 .quizz-start {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #FAFAFA;
 }
 
-.quizz-start h2 {
+.quizz-start h2,
+.quizz-questions h2 {
   font-size: 20px;
   text-align: center;
   font-weight: 700;
@@ -21,30 +24,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: #FFFFFF;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
 }
 
-.basic-informations input {
+.basic-informations input,
+.question input {
   width: 340px;
   height: 45px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid #D1D1D1;
   border-radius: 5px;
   font-size: 19px;
   margin: 5px;
   padding: 0 15px;
 }
 
-.basic-informations input::placeholder {
+.basic-informations input::placeholder,
+.question input::placeholder {
   font-style: italic;
 }
 
-.quizz-start button {
+.quizz-start button,
+.quizz-questions button {
   width: 340px;
   height: 55px;
   font-size: 18px;
-  color: #fff;
-  background-color: #ec362d;
+  color: #FFFFFF;
+  background-color: #EC362D;
   text-align: center;
   border-radius: 15px;
   cursor: pointer;
@@ -53,7 +59,39 @@
 .alert {
   font-size: 14px;
   font-weight: 700;
-  color: #f00;
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
+/* ==================== QUIZZ CREATE PAGE 2 ====================*/
+
+.quizz-questions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.question h3 {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
 }
 
 .quizz-sucess {

@@ -12,7 +12,7 @@ function userQuizzesHTML(quizArray) {
       <div class="quiz-list">
         <div class="quiz-header">
           <h2>Seus Quizzes</h2>
-          <ion-icon name="add-circle"></ion-icon>
+          <ion-icon onclick="renderCreateQuiz()" name="add-circle"></ion-icon>
         </div>
         ${quizzesHTML(quizArray)}
       </div>
