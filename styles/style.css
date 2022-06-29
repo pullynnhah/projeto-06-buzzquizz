@@ -1,5 +1,6 @@
 body {
   font-family: "Roboto", sans-serif;
+  background-color: #fafafa;
 }
 
 header {
@@ -21,4 +22,10 @@ h1 {
   font-size: 37px;
   line-height: 43px;
   font-weight: 700;
+}
+
+main {
+  width: 100vw;
+  height: calc(100vh - 69px);
+  margin-top: 69px;
 }
