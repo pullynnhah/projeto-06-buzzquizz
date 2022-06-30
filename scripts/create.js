@@ -1,7 +1,4 @@
-let quizzTitle = null;
-let quizzImage = null;
-let quizzQuestionNumber = null;
-let quizzLevelNumber = 3;
+let quizzArray = [];
 let question = [];
 let levelsArray = [];
 
@@ -11,13 +8,13 @@ function renderCreateQuiz() {
       <h2>Comece pelo começo</h2>
       <div class="basic-informations">
         <input class="quizz-title" type="text" placeholder="Título do seu quizz">
-        <p class="alert quizz-title hide">Seu título deve ter entre 20 a 65 caracteres</p>
+        <p class="alert quizz-title hide">O título do quizz deve ter entre 20 a 65 caracteres</p>
         <input class="quizz-image" type="text" placeholder="URL da imagem do seu quizz">
-        <p class="alert quizz-image hide">Deve ser um URL válido</p>
+        <p class="alert quizz-image hide">Valor informado não é uma URL válida</p>
         <input class="quizz-question-number" type="text" placeholder="Quantidade de perguntas do quizz">
-        <p class="alert quizz-question-number hide">Deve haver no mínimo 3 perguntas</p>
+        <p class="alert quizz-question-number hide">O quizz deve ter no mínimo 3 perguntas</p>
         <input class="quizz-levels-number" type="text" placeholder="Quantidades de níveis do quizz">
-        <p class="alert quizz-levels-number hide">Deve haver no mínimo 2 níveis</p>
+        <p class="alert quizz-levels-number hide">O quizz deve ter no mínimo 2 níveis</p>
       </div>
       <button onclick="getValuesQuizz()">Prosseguir para criar perguntas</button>
     </div>
@@ -31,56 +28,71 @@ function clearValues() {
   document.querySelector(".quizz-levels-number").value = "";
 }
 
+
 function getValuesQuizz() {
-  quizzTitle = document.querySelector(".quizz-title").value;
-  quizzImage = document.querySelector(".quizz-image").value;
-  quizzQuestionNumber = document.querySelector(".quizz-question-number").value;
-  quizzLevelNumber = document.querySelector(".quizz-levels-number").value;
-  let titleOk = verifyQuizzTitle();
-  let URLOk = verifyURL(quizzImage);
-  let questionNumberOk = verifyQuestionNumber();
-  let LevelNumberOk = verifyLevelNumber();
-  if (titleOk && URLOk && questionNumberOk && LevelNumberOk) {
-    alert("tudo certo, vamos lá");
-    loadQuizzQuestions();
-  } else {
-    alert("rever dados");
-  }
+  quizzArray = [];
+  quizzArray.push(
+    {
+      title: verifyQuizzTitle(document.querySelector('.quizz-title').value.trim()),
+      image: verifyURL(document.querySelector('.quizz-image').value),
+      questions: verifyQuestionNumber(Number(document.querySelector('.quizz-question-number').value)),
+      levels: verifyLevelNumber(Number(document.querySelector('.quizz-levels-number').value)),
+    }
+  )
+  checkQuizzValues(quizzArray);
 }
 
-function verifyQuizzTitle() {
-  let titleLength = quizzTitle.length;
-  if (titleLength < 20 || titleLength > 65) {
+function checkQuizzValues(quizz) {
+  let verificationArray = [];
+  if (quizz[0].title === false) {
+    verificationArray.push(false);
+  } else if (quizz[0].image === false) {
+    verificationArray.push(false);
+  } else if (quizz[0].questions === false) {
+    verificationArray.push(false);
+  } else if (quizz[0].levels === false) {
+    verificationArray.push(false);
+  }
+  if (verificationArray.length === 0) {
+    alert('tudo OK')
+    loadQuizzQuestions();
+  } else {
+    alert('dados com problema')
+  }
+
+}
+
+function verifyQuizzTitle(titulo) {
+  if (titulo.length < 20 || titulo.length > 65) {
     alert("titulo errado");
     return false;
   }
-  return true;
+  return titulo;
 }
 
 function verifyURL(url) {
   try {
     new URL(url);
-    return true;
+    return url;
   } catch (e) {
-    alert("URL errado")
     return false;
   }
 }
 
-function verifyQuestionNumber() {
-  if (quizzQuestionNumber < 3) {
+function verifyQuestionNumber(questions) {
+  if (questions < 3 || isNaN(questions)) {
     alert("Questões menor que 3");
     return false;
   }
-  return true;
+  return questions;
 }
 
-function verifyLevelNumber() {
-  if (quizzLevelNumber < 2) {
+function verifyLevelNumber(levels) {
+  if (levels < 2 || isNaN(levels)) {
     alert("Menos que 2 níveis");
     return false;
   }
-  return true;
+  return levels;
 }
 
 function loadQuizzQuestions() {
@@ -92,24 +104,32 @@ function loadQuizzQuestions() {
 </div>
   `
   let createQuestions = document.querySelector('.all-questions')
-  for (let i = 0; i < quizzQuestionNumber; i++) {
+  for (let i = 0; i < quizzArray[0].questions; i++) {
     createQuestions.innerHTML += `        <div class="question number${(i + 1)}">
     <div>
     <h3>Pergunta ${(i + 1)}</h3>
     <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
     </div>
     <input class="question-title" type="text" placeholder="Texto da pergunta">
+    <p class="alert question-title hide">O título da pergunta deve ter no mínimo 20 caracteres</p>
     <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
+    <p class="alert question-color hide">A cor da pergunta deve ter o formato HEX</p>
     <h3>Resposta Correta</h3>
     <input class="correct-answer" type="text" placeholder="Resposta correta">
+    <p class="alert correct-answer hide">A resposta não pode ser vazia</p>
     <input class="correct-answer-image" type="text" placeholder="URL da imagem">
+    <p class="alert correct-answer-image hide">Valor informado não é uma URL válida</p>
     <h3>Respostas incorretas</h3>
     <input class="wrong-answer1" type="text" placeholder="Resposta incorreta 1">
+    <p class="alert wrong-answer1 hide">A resposta não pode ser vazia</p>
     <input class="wrong-answer1-image" type="text" placeholder="URL da imagem 1">
+    <p class="alert wrong-answer1-image hide">Valor informado não é uma URL válida</p>
     <input class="wrong-answer2" type="text" placeholder="Resposta incorreta 2">
     <input class="wrong-answer2-image" type="text" placeholder="URL da imagem 2">
+    <p class="alert cwrong-answer2-image hide">Valor informado não é uma URL válida</p>
     <input class="wrong-answer3" type="text" placeholder="Resposta incorreta 3">
     <input class="wrong-answer3-image" type="text" placeholder="URL da imagem 3">
+    <p class="alert wrong-answer3-image hide">Valor informado não é uma URL válida</p>
   </div>`
   }
 }
@@ -135,40 +155,31 @@ function verifyQuestionTitle(titulo) {
   return titulo;
 }
 
-function verifyQuestionURL(url) {
-  try {
-    new URL(url);
-    return url;
-  } catch (e) {
-    return false;
-  }
-}
-
 function getValuesQuestions() {
   question = [];
-  for (let i = 0; i < quizzQuestionNumber; i++) {
+  for (let i = 0; i < quizzArray[0].questions; i++) {
     question.push({
       title: verifyQuestionTitle(document.querySelector(`.number${i + 1} .question-title`).value),
       color: verifyHexColor(document.querySelector(`.number${i + 1} .question-color`).value),
       answers: [
         {
           text: document.querySelector(`.number${i + 1} .correct-answer`).value,
-          image: verifyQuestionURL(document.querySelector(`.number${i + 1} .correct-answer-image`).value),
+          image: verifyURL(document.querySelector(`.number${i + 1} .correct-answer-image`).value),
           isCorrectAnswer: true,
         },
         {
           text: document.querySelector(`.number${i + 1} .wrong-answer1`).value,
-          image: verifyQuestionURL(document.querySelector(`.number${i + 1} .wrong-answer1-image`).value),
+          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer1-image`).value),
           isCorrectAnswer: false,
         },
         {
           text: document.querySelector(`.number${i + 1} .wrong-answer2`).value,
-          image: verifyQuestionURL(document.querySelector(`.number${i + 1} .wrong-answer2-image`).value),
+          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer2-image`).value),
           isCorrectAnswer: false,
         },
         {
           text: document.querySelector(`.number${i + 1} .wrong-answer3`).value,
-          image: verifyQuestionURL(document.querySelector(`.number${i + 1} .wrong-answer3-image`).value),
+          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer3-image`).value),
           isCorrectAnswer: false,
         },
       ]
@@ -216,7 +227,7 @@ function loadQuizzLevels() {
 </div>
   `
   let createLevels = document.querySelector('.all-levels')
-  for (let i = 0; i < quizzLevelNumber; i++) {
+  for (let i = 0; i < quizzArray[0].levels; i++) {
     createLevels.innerHTML += `
     <div class="level number${(i + 1)}">
     <div>
@@ -224,9 +235,13 @@ function loadQuizzLevels() {
       <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
     </div>
     <input class="level-title" type="text" placeholder="Título do Nível">
+    <p class="alert level-title hide">O título do nível deve ter no mínimo 10 caracteres</p>
     <input class="level-percentage" type="text" placeholder="% de acerto mínima">
+    <p class="alert level-percentage hide">O valor do nível deve ser um número entre 0 e 100</p>
     <input class="level-image" type="text" placeholder="URL da imagem do nível">
+    <p class="alert level-image hide">Valor informado não é uma URL válida</p>
     <input class="level-text" type="text" placeholder="Descrição do nível">
+    <p class="alert level-text hide">A descrição do nível deve ter no mínimo 30 caracteres</p>
   </div>
 `
   }
@@ -255,11 +270,11 @@ function verifyLevelPercentage(percentage) {
 
 function getValuesLevels() {
   levelsArray = [];
-  for (let i = 0; i < quizzLevelNumber; i++) {
+  for (let i = 0; i < quizzArray[0].levels; i++) {
     levelsArray.push(
       {
         title: verifyLevelTitle(document.querySelector(`.number${i + 1} .level-title`).value.trim()),
-        image: verifyQuestionURL(document.querySelector(`.number${i + 1} .level-image`).value),
+        image: verifyURL(document.querySelector(`.number${i + 1} .level-image`).value),
         text: verifyLevelText(document.querySelector(`.number${i + 1} .level-text`).value.trim()),
         minValue: verifyLevelPercentage(Number(document.querySelector(`.number${i + 1} .level-percentage`).value)),
       }
@@ -320,7 +335,7 @@ function renderSucessPage(image, title, id) {
 
 
 // TODO: deletar o conteúdo da variável abaixo quando possível
-/* let userQuiz = {
+let userQuiz = {
   title: "Título do quizz",
   image: "https://http.cat/411.jpg",
   questions: [
@@ -387,6 +402,6 @@ function renderSucessPage(image, title, id) {
       minValue: 50,
     },
   ],
-}; */
+};
 // renderCreateQuiz();
 //saveQuizz();
