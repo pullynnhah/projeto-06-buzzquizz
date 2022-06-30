@@ -1,7 +1,9 @@
 let quizzTitle = null;
 let quizzImage = null;
-let quizzQuestionNumber = 3;
-let quizzLevelNumber = null;
+let quizzQuestionNumber = null;
+let quizzLevelNumber = 3;
+let question = [];
+let levelsArray = [];
 
 function renderCreateQuiz() {
   document.querySelector("main").innerHTML = ` 
@@ -126,11 +128,8 @@ function expand(element) {
 
 }
 
-let question = []
-
 function verifyQuestionTitle(titulo) {
   if (titulo.length < 20 || titulo.length > 65) {
-    alert("titulo errado");
     return false;
   }
   return titulo;
@@ -197,13 +196,98 @@ function checkQuestionValues(question) {
   }
   if (verificationArray.length === 0) {
     alert('tudo OK')
+    loadQuizzLevels();
   } else {
     alert('dados com problema')
   }
 }
 
 
-loadQuizzQuestions();
+//loadQuizzQuestions();
+//loadQuizzLevels();
+
+function loadQuizzLevels() {
+  document.querySelector('main').innerHTML = `
+  <div class="quizz-levels">
+  <h2>Agora, decida os níveis!</h2>
+  <div class="all-levels">
+  </div>
+  <button onclick="getValuesLevels()"> Finalizar Quizz</button>
+</div>
+  `
+  let createLevels = document.querySelector('.all-levels')
+  for (let i = 0; i < quizzLevelNumber; i++) {
+    createLevels.innerHTML += `
+    <div class="level number${(i + 1)}">
+    <div>
+      <h3>Nível ${(i + 1)}</h3>
+      <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
+    </div>
+    <input class="level-title" type="text" placeholder="Título do Nível">
+    <input class="level-percentage" type="text" placeholder="% de acerto mínima">
+    <input class="level-image" type="text" placeholder="URL da imagem do nível">
+    <input class="level-text" type="text" placeholder="Descrição do nível">
+  </div>
+`
+  }
+}
+
+function verifyLevelTitle(titulo) {
+  if (titulo.length < 10 || titulo.length > 65) {
+    return false;
+  }
+  return titulo;
+}
+
+function verifyLevelText(text) {
+  if (text.length < 30 || text.length > 1000) {
+    return false;
+  }
+  return text;
+}
+
+function verifyLevelPercentage(percentage) {
+  if (percentage !== NaN && percentage >= 0 && percentage <= 100) {
+    return percentage;
+  }
+  return false;
+}
+
+function getValuesLevels() {
+  levelsArray = [];
+  for (let i = 0; i < quizzLevelNumber; i++) {
+    levelsArray.push(
+      {
+        title: verifyLevelTitle(document.querySelector(`.number${i + 1} .level-title`).value.trim()),
+        image: verifyQuestionURL(document.querySelector(`.number${i + 1} .level-image`).value),
+        text: verifyLevelText(document.querySelector(`.number${i + 1} .level-text`).value.trim()),
+        minValue: verifyLevelPercentage(Number(document.querySelector(`.number${i + 1} .level-percentage`).value)),
+      }
+    )
+  }
+  checkLevelsValues(levelsArray)
+}
+
+function checkLevelsValues(levels) {
+  let verificationArray = [];
+  for (let i = 0; i < levels.length; i++) {
+    if (levels[i].title === false) {
+      verificationArray.push(false);
+    } else if (levels[i].image === false) {
+      verificationArray.push(false);
+    } else if (levels[i].text === false) {
+      verificationArray.push(false);
+    } else if (levels[i].minValue === false) {
+      verificationArray.push(false);
+    }
+  }
+  if (verificationArray.length === 0) {
+    alert('tudo OK')
+    renderSucessPage();
+  } else {
+    alert('dados com problema')
+  }
+}
 
 function saveQuizz() {
   renderLoading();
@@ -236,7 +320,7 @@ function renderSucessPage(image, title, id) {
 
 
 // TODO: deletar o conteúdo da variável abaixo quando possível
-let userQuiz = {
+/* let userQuiz = {
   title: "Título do quizz",
   image: "https://http.cat/411.jpg",
   questions: [
@@ -303,6 +387,6 @@ let userQuiz = {
       minValue: 50,
     },
   ],
-};
+}; */
 // renderCreateQuiz();
 //saveQuizz();

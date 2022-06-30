@@ -8,7 +8,8 @@
 }
 
 .quizz-start h2,
-.quizz-questions h2 {
+.quizz-questions h2,
+.quizz-levels h2 {
   font-size: 20px;
   text-align: center;
   font-weight: 700;
@@ -29,8 +30,10 @@
 }
 
 .basic-informations input,
-.question input {
-  width: 340px;
+.question input,
+.level input {
+  width: 90vw;
+  max-width: 565px;
   height: 45px;
   border: 1px solid #D1D1D1;
   border-radius: 5px;
@@ -40,13 +43,16 @@
 }
 
 .basic-informations input::placeholder,
-.question input::placeholder {
+.question input::placeholder,
+.level input::placeholder {
   font-style: italic;
 }
 
 .quizz-start button,
-.quizz-questions button {
-  width: 340px;
+.quizz-questions button,
+.quizz-levels button {
+  width: 80vw;
+  max-width: 370px;
   height: 55px;
   font-size: 18px;
   color: #FFFFFF;
@@ -68,13 +74,21 @@
 
 /* ==================== QUIZZ CREATE PAGE 2 ====================*/
 
-.quizz-questions {
+.quizz-questions,
+.quizz-levels {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.question {
+.all-question,
+.all-levels {
+  width: 100%;
+  height: auto;
+}
+
+.question,
+.level {
   width: 100%;
   margin: 20px auto;
   padding: 20px;
@@ -95,29 +109,38 @@
   transition: all 1s linear;
 }
 
-.question :first-child {
-  width: 100%;
+.question :first-child,
+.level :first-child {
+  width: 90vw;
+  max-width: 565px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-
-
-.question ion-icon {
-  font-size: 26px;
-  color: #000000;
-  cursor: pointer;
-}
-
-.question h3 {
+.question h3,
+.level h3 {
   font-size: 20px;
   font-weight: 700;
   text-align: left;
 }
 
+.level-text {
+  height: 180px;
+}
+
 .quizz-sucess {
   width: 340px;
   margin: 108px auto;
+}
+
+.question ion-icon,
+.level ion-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 26px;
+  color: #000000;
+  cursor: pointer;
 }
 
 .quizz-sucess h2 {
