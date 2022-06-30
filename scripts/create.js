@@ -235,7 +235,6 @@ function renderSucessPage(image, title, id) {
 }
 
 
-
 // TODO: deletar o conteúdo da variável abaixo quando possível
 let userQuiz = {
   title: "Título do quizz",
