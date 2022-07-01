@@ -42,29 +42,40 @@ function getValuesQuizz() {
   checkQuizzValues(quizzArray);
 }
 
+function hideAlerts() {
+  let alertsShown = document.querySelectorAll('.alert');
+  for (let i = 0; i < alertsShown.length; i++) {
+    alertsShown[i].classList.add('hide');
+  }
+}
+
 function checkQuizzValues(quizz) {
+  hideAlerts();
   let verificationArray = [];
   if (quizz[0].title === false) {
     verificationArray.push(false);
-  } else if (quizz[0].image === false) {
+    document.querySelector('.alert.quizz-title').classList.remove('hide');
+  }
+  if (quizz[0].image === false) {
     verificationArray.push(false);
-  } else if (quizz[0].questions === false) {
+    document.querySelector('.alert.quizz-image').classList.remove('hide');
+  }
+  if (quizz[0].questions === false) {
     verificationArray.push(false);
-  } else if (quizz[0].levels === false) {
+    document.querySelector('.alert.quizz-question-number').classList.remove('hide');
+  }
+  if (quizz[0].levels === false) {
     verificationArray.push(false);
+    document.querySelector('.alert.quizz-levels-number').classList.remove('hide');
   }
   if (verificationArray.length === 0) {
-    alert('tudo OK')
+    alert('tudo OK nos valores iniciais')
     loadQuizzQuestions();
-  } else {
-    alert('dados com problema')
   }
-
 }
 
 function verifyQuizzTitle(titulo) {
   if (titulo.length < 20 || titulo.length > 65) {
-    alert("titulo errado");
     return false;
   }
   return titulo;
@@ -81,7 +92,6 @@ function verifyURL(url) {
 
 function verifyQuestionNumber(questions) {
   if (questions < 3 || isNaN(questions)) {
-    alert("Questões menor que 3");
     return false;
   }
   return questions;
@@ -89,7 +99,6 @@ function verifyQuestionNumber(questions) {
 
 function verifyLevelNumber(levels) {
   if (levels < 2 || isNaN(levels)) {
-    alert("Menos que 2 níveis");
     return false;
   }
   return levels;
@@ -116,12 +125,12 @@ function loadQuizzQuestions() {
     <p class="alert question-color hide">A cor da pergunta deve ter o formato HEX</p>
     <h3>Resposta Correta</h3>
     <input class="correct-answer" type="text" placeholder="Resposta correta">
-    <p class="alert correct-answer hide">A resposta não pode ser vazia</p>
+    <p class="alert correct-answer hide">A resposta correta não pode ser vazia</p>
     <input class="correct-answer-image" type="text" placeholder="URL da imagem">
     <p class="alert correct-answer-image hide">Valor informado não é uma URL válida</p>
     <h3>Respostas incorretas</h3>
     <input class="wrong-answer1" type="text" placeholder="Resposta incorreta 1">
-    <p class="alert wrong-answer1 hide">A resposta não pode ser vazia</p>
+    <p class="alert wrong-answer1 hide">Deve haver pelo menos uma resposta errada</p>
     <input class="wrong-answer1-image" type="text" placeholder="URL da imagem 1">
     <p class="alert wrong-answer1-image hide">Valor informado não é uma URL válida</p>
     <input class="wrong-answer2" type="text" placeholder="Resposta incorreta 2">
@@ -189,27 +198,39 @@ function getValuesQuestions() {
 }
 
 function checkQuestionValues(question) {
+  hideAlerts()
   let verificationArray = [];
   for (let i = 0; i < question.length; i++) {
     if (question[i].title === false) {
       verificationArray.push(false);
-    } else if (question[i].color === false) {
+      document.querySelector(`.number${i + 1} .alert.question-title`).classList.remove('hide');
+    }
+    if (question[i].color === false) {
       verificationArray.push(false);
-    } else if (question[i].answers[0].text.trim() === '') {
+      document.querySelector(`.number${i + 1} .alert.question-color`).classList.remove('hide');
+    }
+    if (question[i].answers[0].text.trim() === '') {
       verificationArray.push(false);
-    } else if (question[i].answers[0].image === false) {
+      document.querySelector(`.number${i + 1} .alert.correct-answer`).classList.remove('hide');
+    }
+    if (question[i].answers[0].image === false) {
       verificationArray.push(false);
-    } else if (question[i].answers[1].text.trim() === '') {
+      document.querySelector(`.number${i + 1} .alert.correct-answer-image`).classList.remove('hide');
+    }
+    if (question[i].answers[1].text.trim() === '') {
       verificationArray.push(false);
-    } else if (question[i].answers[1].image === false) {
+      document.querySelector(`.number${i + 1} .alert.wrong-answer1`).classList.remove('hide');
+    }
+    if (question[i].answers[1].image === false) {
       verificationArray.push(false);
+      document.querySelector(`.number${i + 1} .alert.wrong-answer1-image`).classList.remove('hide');
     }
   }
   if (verificationArray.length === 0) {
-    alert('tudo OK')
+    alert('tudo OK nas perguntas')
     loadQuizzLevels();
   } else {
-    alert('dados com problema')
+    alert('dados com problema nas perguntas')
   }
 }
 
@@ -238,6 +259,8 @@ function loadQuizzLevels() {
     <p class="alert level-title hide">O título do nível deve ter no mínimo 10 caracteres</p>
     <input class="level-percentage" type="text" placeholder="% de acerto mínima">
     <p class="alert level-percentage hide">O valor do nível deve ser um número entre 0 e 100</p>
+    <p class="alert level-percentage-no-zero hide">Deve haver pelo menos um valor zero</p>
+    <p class="alert level-percentage-repeat hide">Não pode haver mais de um valor igual</p>
     <input class="level-image" type="text" placeholder="URL da imagem do nível">
     <p class="alert level-image hide">Valor informado não é uma URL válida</p>
     <input class="level-text" type="text" placeholder="Descrição do nível">
@@ -284,23 +307,43 @@ function getValuesLevels() {
 }
 
 function checkLevelsValues(levels) {
+  hideAlerts();
   let verificationArray = [];
+  let verificationLevelZero = []
   for (let i = 0; i < levels.length; i++) {
     if (levels[i].title === false) {
       verificationArray.push(false);
-    } else if (levels[i].image === false) {
+      document.querySelector(`.number${i + 1} .alert.level-title`).classList.remove('hide');
+    }
+    if (levels[i].image === false) {
       verificationArray.push(false);
-    } else if (levels[i].text === false) {
+      document.querySelector(`.number${i + 1} .alert.level-image`).classList.remove('hide');
+    }
+    if (levels[i].text === false) {
       verificationArray.push(false);
-    } else if (levels[i].minValue === false) {
+      document.querySelector(`.number${i + 1} .alert.level-text`).classList.remove('hide');
+    }
+    if (levels[i].minValue === false) {
       verificationArray.push(false);
+      document.querySelector(`.number${i + 1} .alert.level-percentage`).classList.remove('hide');
     }
   }
-  if (verificationArray.length === 0) {
-    alert('tudo OK')
-    renderSucessPage();
-  } else {
-    alert('dados com problema')
+  for (let i = 0; i < levels.length; i++) {
+    if (levels[i].minValue === 0) {
+      verificationLevelZero.push(i);
+    }
+  }
+  if (verificationLevelZero.length === 0) {
+    alert('Deve ter um nível com porcentagem 0')
+  } else if (verificationLevelZero.length > 1) {
+    alert('Tem mais de um nível com porcentagem 0')
+  } else if (verificationLevelZero.length === 1) {
+    if (verificationArray.length === 0) {
+      alert('tudo OK nos levels')
+      renderSucessPage();
+    } else {
+      alert('dados com problema nos levels')
+    }
   }
 }
 
