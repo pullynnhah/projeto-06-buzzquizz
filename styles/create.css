@@ -18,7 +18,6 @@
 
 .basic-informations {
   width: 100%;
-  max-width: 600px;
   margin: 30px auto;
   padding: 20px;
   display: flex;
@@ -33,8 +32,7 @@
 .basic-informations input,
 .question input,
 .level input {
-  width: 90vw;
-  max-width: 565px;
+  width: 100%;
   height: 45px;
   border: 1px solid #D1D1D1;
   border-radius: 5px;
@@ -53,8 +51,7 @@
 .quizz-start button,
 .quizz-questions button,
 .quizz-levels button {
-  width: 80vw;
-  max-width: 370px;
+  width: 80%;
   height: 55px;
   font-size: 18px;
   color: #FFFFFF;
@@ -62,11 +59,11 @@
   text-align: center;
   border-radius: 15px;
   cursor: pointer;
+  margin-bottom: 50px;
 }
 
 .alert {
-  width: 90vw;
-  max-width: 565px;
+  width: 100%;
   font-size: 16px;
   font-weight: 400;
   color: #EC362D;
@@ -86,7 +83,7 @@
   align-items: center;
 }
 
-.all-question,
+.all-questions,
 .all-levels {
   width: 100%;
   height: auto;
@@ -95,7 +92,6 @@
 .question,
 .level {
   width: 100%;
-  max-width: 600px;
   margin: 30px auto;
   padding: 0 20px;
   display: flex;
@@ -115,8 +111,7 @@
 
 .question :first-child,
 .level :first-child {
-  width: 90vw;
-  max-width: 565px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -124,15 +119,15 @@
 
 .question h3,
 .level h3 {
-  width: 90vw;
-  max-width: 565px;
+  width: 100%;
   font-size: 20px;
   font-weight: 700;
-  margin: 27px 0
+  margin: 27px 0;
 }
 
 .level .level-text {
   height: 180px;
+  margin-bottom: 25px;
 }
 
 .quizz-sucess {
@@ -185,7 +180,36 @@
   cursor: pointer;
 }
 
+/* ==================== MEDIA QUERY ====================*/
+
 @media (min-width: 1100px) {
+
+  .basic-informations,
+  .question,
+  .level {
+    width: 600px;
+  }
+
+  .basic-informations input,
+  .question input,
+  .level input {
+    width: 565px;
+  }
+
+  .quizz-start button,
+  .quizz-questions button,
+  .quizz-levels button {
+    width: 370px
+  }
+
+  .alert,
+  .question :first-child,
+  .level :first-child,
+  .question h3,
+  .level h3 {
+    width: 565px;
+  }
+
   .quizz-sucess {
     width: 500px;
   }
