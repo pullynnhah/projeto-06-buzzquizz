@@ -18,7 +18,8 @@
 
 .basic-informations {
   width: 100%;
-  margin: 20px auto;
+  max-width: 600px;
+  margin: 30px auto;
   padding: 20px;
   display: flex;
   flex-wrap: nowrap;
@@ -46,6 +47,7 @@
 .question input::placeholder,
 .level input::placeholder {
   font-style: italic;
+  color: #D1D1D1;
 }
 
 .quizz-start button,
@@ -63,10 +65,12 @@
 }
 
 .alert {
+  width: 90vw;
+  max-width: 565px;
   font-size: 16px;
   font-weight: 400;
   color: #EC362D;
-  margin: 2px 0;
+  margin: 0 15px 10px 20px;
 }
 
 .hide {
@@ -91,10 +95,10 @@
 .question,
 .level {
   width: 100%;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 20px;
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -104,10 +108,9 @@
 }
 
 .expand {
-  height: 75px;
+  height: 74px;
   overflow: hidden;
   justify-content: flex-start;
-  transition: all 1s linear;
 }
 
 .question :first-child,
@@ -121,12 +124,14 @@
 
 .question h3,
 .level h3 {
+  width: 90vw;
+  max-width: 565px;
   font-size: 20px;
   font-weight: 700;
-  text-align: left;
+  margin: 27px 0
 }
 
-.level-text {
+.level .level-text {
   height: 180px;
 }
 
@@ -137,8 +142,6 @@
 
 .question ion-icon,
 .level ion-icon {
-  width: 30px;
-  height: 30px;
   font-size: 26px;
   color: #000000;
   cursor: pointer;

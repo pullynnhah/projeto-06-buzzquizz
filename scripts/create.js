@@ -114,7 +114,7 @@ function loadQuizzQuestions() {
   `
   let createQuestions = document.querySelector('.all-questions')
   for (let i = 0; i < quizzArray[0].questions; i++) {
-    createQuestions.innerHTML += `        <div class="question number${(i + 1)}">
+    createQuestions.innerHTML += `        <div class="question number${(i + 1)} expand">
     <div>
     <h3>Pergunta ${(i + 1)}</h3>
     <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
@@ -141,6 +141,8 @@ function loadQuizzQuestions() {
     <p class="alert wrong-answer3-image hide">Valor informado não é uma URL válida</p>
   </div>`
   }
+  document.querySelector('.number1').classList.remove('expand');
+  document.querySelector('.number1 ion-icon').classList.add('hide')
 }
 
 function verifyHexColor(color) {
@@ -151,9 +153,18 @@ function verifyHexColor(color) {
 }
 
 function expand(element) {
+  document.querySelector('ion-icon.hide').classList.remove('hide')
+  let expandAllQuestions = document.querySelectorAll('.question')
+  for (let i = 0; i < expandAllQuestions.length; i++) {
+    expandAllQuestions[i].classList.add('expand')
+  }
+  let expandAllLevels = document.querySelectorAll('.level')
+  for (let i = 0; i < expandAllLevels.length; i++) {
+    expandAllLevels[i].classList.add('expand')
+  }
   let selectExpand = element.parentNode.parentNode;
-  selectExpand.classList.add('expand')
-  console.log("rodei")
+  selectExpand.classList.remove('expand')
+  element.classList.add('hide')
 
 }
 
@@ -235,9 +246,6 @@ function checkQuestionValues(question) {
 }
 
 
-//loadQuizzQuestions();
-//loadQuizzLevels();
-
 function loadQuizzLevels() {
   document.querySelector('main').innerHTML = `
   <div class="quizz-levels">
@@ -250,7 +258,7 @@ function loadQuizzLevels() {
   let createLevels = document.querySelector('.all-levels')
   for (let i = 0; i < quizzArray[0].levels; i++) {
     createLevels.innerHTML += `
-    <div class="level number${(i + 1)}">
+    <div class="level number${(i + 1)} expand">
     <div>
       <h3>Nível ${(i + 1)}</h3>
       <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
@@ -268,6 +276,8 @@ function loadQuizzLevels() {
   </div>
 `
   }
+  document.querySelector('.number1').classList.remove('expand');
+  document.querySelector('.number1 ion-icon').classList.add('hide')
 }
 
 function verifyLevelTitle(titulo) {
@@ -285,10 +295,10 @@ function verifyLevelText(text) {
 }
 
 function verifyLevelPercentage(percentage) {
-  if (percentage !== NaN && percentage >= 0 && percentage <= 100) {
-    return percentage;
+  if (percentage === '' || Number(percentage) === NaN || Number(percentage) < 0 || Number(percentage) > 100) {
+    return false;
   }
-  return false;
+  return Number(percentage);
 }
 
 function getValuesLevels() {
@@ -299,7 +309,7 @@ function getValuesLevels() {
         title: verifyLevelTitle(document.querySelector(`.number${i + 1} .level-title`).value.trim()),
         image: verifyURL(document.querySelector(`.number${i + 1} .level-image`).value),
         text: verifyLevelText(document.querySelector(`.number${i + 1} .level-text`).value.trim()),
-        minValue: verifyLevelPercentage(Number(document.querySelector(`.number${i + 1} .level-percentage`).value)),
+        minValue: verifyLevelPercentage(document.querySelector(`.number${i + 1} .level-percentage`).value.trim()),
       }
     )
   }
