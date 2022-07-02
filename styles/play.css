@@ -7,6 +7,7 @@
 .play-header img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .play-header h2 {
@@ -42,7 +43,7 @@
 }
 
 .question-header {
-  width: 340px;
+  width: 100%;
   margin: 0 auto 13px;
   height: 89px;
 
@@ -59,11 +60,13 @@
 }
 
 .answers-container {
-  width: 340px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+
+  gap: 15px;
 }
 
 .open .answer:hover {
@@ -76,8 +79,9 @@
 }
 
 .answer img {
-  width: 163px;
-  height: 113px;
+  width: calc((100vw - 55px)/2);
+  height: 180px;
+  object-fit: cover;
 }
 
 .answer p {
@@ -125,6 +129,7 @@
 .result {
   margin-bottom: 48px;
 }
+
 .result img {
   width: 100%;
   height: 255px;
@@ -241,15 +246,18 @@
     font-size: 23px;
     line-height: 27px;
   }
+
   .result {
     display: flex;
     gap: 21px;
     margin-bottom: 79px;
   }
+
   .result img {
     width: 364px;
     height: 273px;
   }
+
   .result p {
     width: 328px;
     font-size: 19px;
