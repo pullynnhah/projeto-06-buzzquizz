@@ -69,7 +69,6 @@ function checkQuizzValues(quizz) {
     document.querySelector('.alert.quizz-levels-number').classList.remove('hide');
   }
   if (verificationArray.length === 0) {
-    alert('tudo OK nos valores iniciais')
     loadQuizzQuestions();
   }
 }
@@ -124,21 +123,23 @@ function loadQuizzQuestions() {
     <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
     <p class="alert question-color hide">A cor da pergunta deve ter o formato HEX</p>
     <h3>Resposta Correta</h3>
-    <input class="correct-answer" type="text" placeholder="Resposta correta">
-    <p class="alert correct-answer hide">A resposta correta não pode ser vazia</p>
-    <input class="correct-answer-image" type="text" placeholder="URL da imagem">
-    <p class="alert correct-answer-image hide">Valor informado não é uma URL válida</p>
+    <input class="answer0" type="text" placeholder="Resposta correta">
+    <p class="alert answer0 hide">A resposta correta não pode ser vazia</p>
+    <input class="answer0-image" type="text" placeholder="URL da imagem">
+    <p class="alert answer0-image hide">Valor informado não é uma URL válida</p>
     <h3>Respostas incorretas</h3>
-    <input class="wrong-answer1" type="text" placeholder="Resposta incorreta 1">
-    <p class="alert wrong-answer1 hide">Deve haver pelo menos uma resposta errada</p>
-    <input class="wrong-answer1-image" type="text" placeholder="URL da imagem 1">
-    <p class="alert wrong-answer1-image hide">Valor informado não é uma URL válida</p>
-    <input class="wrong-answer2" type="text" placeholder="Resposta incorreta 2">
-    <input class="wrong-answer2-image" type="text" placeholder="URL da imagem 2">
-    <p class="alert cwrong-answer2-image hide">Valor informado não é uma URL válida</p>
-    <input class="wrong-answer3" type="text" placeholder="Resposta incorreta 3">
-    <input class="wrong-answer3-image" type="text" placeholder="URL da imagem 3">
-    <p class="alert wrong-answer3-image hide">Valor informado não é uma URL válida</p>
+    <input class="answer1" type="text" placeholder="Resposta incorreta 1">
+    <p class="alert answer1 hide">Deve haver pelo menos uma resposta errada</p>
+    <input class="answer1-image" type="text" placeholder="URL da imagem 1">
+    <p class="alert answer1-image hide">Valor informado não é uma URL válida</p>
+    <input class="answer2" type="text" placeholder="Resposta incorreta 2">
+    <p class="alert answer2 hide">A resposta não pode ser vazia</p>
+    <input class="answer2-image" type="text" placeholder="URL da imagem 2">
+    <p class="alert answer2-image hide">Valor informado não é uma URL válida</p>
+    <input class="answer3" type="text" placeholder="Resposta incorreta 3">
+    <p class="alert answer3 hide">A resposta não pode ser vazia</p>
+    <input class="answer3-image" type="text" placeholder="URL da imagem 3">
+    <p class="alert answer3-image hide">Valor informado não é uma URL válida</p>
   </div>`
   }
   document.querySelector('.number1').classList.remove('expand');
@@ -169,7 +170,7 @@ function expand(element) {
 }
 
 function verifyQuestionTitle(titulo) {
-  if (titulo.length < 20 || titulo.length > 65) {
+  if (titulo.length < 20 || titulo.length > 100) {
     return false;
   }
   return titulo;
@@ -183,30 +184,42 @@ function getValuesQuestions() {
       color: verifyHexColor(document.querySelector(`.number${i + 1} .question-color`).value),
       answers: [
         {
-          text: document.querySelector(`.number${i + 1} .correct-answer`).value,
-          image: verifyURL(document.querySelector(`.number${i + 1} .correct-answer-image`).value),
+          text: document.querySelector(`.number${i + 1} .answer0`).value,
+          image: verifyURL(document.querySelector(`.number${i + 1} .answer0-image`).value),
           isCorrectAnswer: true,
         },
         {
-          text: document.querySelector(`.number${i + 1} .wrong-answer1`).value,
-          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer1-image`).value),
-          isCorrectAnswer: false,
-        },
-        {
-          text: document.querySelector(`.number${i + 1} .wrong-answer2`).value,
-          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer2-image`).value),
-          isCorrectAnswer: false,
-        },
-        {
-          text: document.querySelector(`.number${i + 1} .wrong-answer3`).value,
-          image: verifyURL(document.querySelector(`.number${i + 1} .wrong-answer3-image`).value),
+          text: document.querySelector(`.number${i + 1} .answer1`).value,
+          image: verifyURL(document.querySelector(`.number${i + 1} .answer1-image`).value),
           isCorrectAnswer: false,
         },
       ]
     })
   }
-  checkQuestionValues(question)
+  verifyQuestionAnswers(question);
+  checkQuestionValues(question);
 }
+
+function verifyQuestionAnswers(question) {
+  for (let i = 0; i < question.length; i++)
+    if (question[i].answers[1].text.trim() !== '' && (document.querySelector(`.number${i + 1} .answer2`).value.trim() !== '') || (document.querySelector(`.number${i + 1} .answer2-image`).value.trim() !== '')) {
+      question[i].answers.push({
+        text: document.querySelector(`.number${i + 1} .answer2`).value,
+        image: verifyURL(document.querySelector(`.number${i + 1} .answer2-image`).value),
+        isCorrectAnswer: false,
+      },
+      )
+      if (question[i].answers[2].text.trim() !== '' && (document.querySelector(`.number${i + 1} .answer3`).value.trim() !== '') || (document.querySelector(`.number${i + 1} .answer3-image`).value.trim() !== '')) {
+        question[i].answers.push({
+          text: document.querySelector(`.number${i + 1} .answer3`).value,
+          image: verifyURL(document.querySelector(`.number${i + 1} .answer3-image`).value),
+          isCorrectAnswer: false,
+        },
+        )
+      }
+    }
+}
+
 
 function checkQuestionValues(question) {
   hideAlerts()
@@ -220,28 +233,19 @@ function checkQuestionValues(question) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.question-color`).classList.remove('hide');
     }
-    if (question[i].answers[0].text.trim() === '') {
-      verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.correct-answer`).classList.remove('hide');
-    }
-    if (question[i].answers[0].image === false) {
-      verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.correct-answer-image`).classList.remove('hide');
-    }
-    if (question[i].answers[1].text.trim() === '') {
-      verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.wrong-answer1`).classList.remove('hide');
-    }
-    if (question[i].answers[1].image === false) {
-      verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.wrong-answer1-image`).classList.remove('hide');
+    for (let j = 0; j < question[i].answers.length; j++) {
+      if (question[i].answers[j].text.trim() === '') {
+        verificationArray.push(false);
+        document.querySelector(`.number${i + 1} .alert.answer${j}`).classList.remove('hide');
+      }
+      if (question[i].answers[j].image === false) {
+        verificationArray.push(false);
+        document.querySelector(`.number${i + 1} .alert.answer${j}-image`).classList.remove('hide');
+      }
     }
   }
   if (verificationArray.length === 0) {
-    alert('tudo OK nas perguntas')
     loadQuizzLevels();
-  } else {
-    alert('dados com problema nas perguntas')
   }
 }
 
@@ -295,7 +299,7 @@ function verifyLevelText(text) {
 }
 
 function verifyLevelPercentage(percentage) {
-  if (percentage === '' || Number(percentage) === NaN || Number(percentage) < 0 || Number(percentage) > 100) {
+  if (percentage === '' || isNaN(Number(percentage)) || Number(percentage) < 0 || Number(percentage) > 100) {
     return false;
   }
   return Number(percentage);
@@ -319,6 +323,7 @@ function getValuesLevels() {
 function checkLevelsValues(levels) {
   hideAlerts();
   let verificationArray = [];
+  let verificationLevelArray = []
   let verificationLevelZero = []
   for (let i = 0; i < levels.length; i++) {
     if (levels[i].title === false) {
@@ -339,20 +344,23 @@ function checkLevelsValues(levels) {
     }
   }
   for (let i = 0; i < levels.length; i++) {
+    for (let j = i + 1; j < levels.length; j++)
+      if (levels[i].minValue === levels[j].minValue) {
+        verificationLevelArray.push(false);
+        document.querySelector(`.number${i + 1} .level-percentage-repeat`).classList.remove('hide');
+        document.querySelector(`.number${j + 1} .level-percentage-repeat`).classList.remove('hide');
+      }
     if (levels[i].minValue === 0) {
-      verificationLevelZero.push(i);
+      verificationLevelZero.push(true)
     }
   }
   if (verificationLevelZero.length === 0) {
-    alert('Deve ter um nível com porcentagem 0')
+    document.querySelector('.level-percentage-no-zero').classList.remove('hide');
   } else if (verificationLevelZero.length > 1) {
     alert('Tem mais de um nível com porcentagem 0')
   } else if (verificationLevelZero.length === 1) {
-    if (verificationArray.length === 0) {
-      alert('tudo OK nos levels')
+    if (verificationArray.length === 0 && verificationLevelArray.length === 0) {
       renderSucessPage();
-    } else {
-      alert('dados com problema nos levels')
     }
   }
 }
