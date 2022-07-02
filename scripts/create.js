@@ -360,9 +360,21 @@ function checkLevelsValues(levels) {
     alert('Tem mais de um nível com porcentagem 0')
   } else if (verificationLevelZero.length === 1) {
     if (verificationArray.length === 0 && verificationLevelArray.length === 0) {
-      renderSucessPage();
+      getQuizzDone();
     }
   }
+}
+
+let userQuiz;
+
+function getQuizzDone() {
+  userQuiz = {
+    title: quizzArray[0].title,
+    image: quizzArray[0].image,
+    questions: question,
+    levels: levelsArray,
+  };
+  saveQuizz();
 }
 
 function saveQuizz() {
@@ -396,73 +408,6 @@ function renderSucessPage(image, title, id) {
 
 
 // TODO: deletar o conteúdo da variável abaixo quando possível
-let userQuiz = {
-  title: "Título do quizz",
-  image: "https://http.cat/411.jpg",
-  questions: [
-    {
-      title: "Título da pergunta 1",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-    {
-      title: "Título da pergunta 2",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-    {
-      title: "Título da pergunta 3",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-  ],
-  levels: [
-    {
-      title: "Título do nível 1",
-      image: "https://http.cat/411.jpg",
-      text: "Descrição do nível 1",
-      minValue: 0,
-    },
-    {
-      title: "Título do nível 2",
-      image: "https://http.cat/412.jpg",
-      text: "Descrição do nível 2",
-      minValue: 50,
-    },
-  ],
-};
+
 // renderCreateQuiz();
 //saveQuizz();
