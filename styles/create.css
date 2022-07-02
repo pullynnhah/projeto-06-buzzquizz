@@ -131,8 +131,8 @@
 }
 
 .quizz-sucess {
-  width: 340px;
-  margin: 108px auto;
+  width: 100%;
+  padding: 40px 20px;
 }
 
 .question ion-icon,
@@ -212,6 +212,7 @@
 
   .quizz-sucess {
     width: 500px;
+    margin: auto;
   }
 
   .quizz-sucess .gradient {
