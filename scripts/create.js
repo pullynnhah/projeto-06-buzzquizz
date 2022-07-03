@@ -28,24 +28,21 @@ function clearValues() {
   document.querySelector(".quizz-levels-number").value = "";
 }
 
-
 function getValuesQuizz() {
   quizzArray = [];
-  quizzArray.push(
-    {
-      title: verifyQuizzTitle(document.querySelector('.quizz-title').value.trim()),
-      image: verifyURL(document.querySelector('.quizz-image').value),
-      questions: verifyQuestionNumber(Number(document.querySelector('.quizz-question-number').value)),
-      levels: verifyLevelNumber(Number(document.querySelector('.quizz-levels-number').value)),
-    }
-  )
+  quizzArray.push({
+    title: verifyQuizzTitle(document.querySelector(".quizz-title").value.trim()),
+    image: verifyURL(document.querySelector(".quizz-image").value),
+    questions: verifyQuestionNumber(Number(document.querySelector(".quizz-question-number").value)),
+    levels: verifyLevelNumber(Number(document.querySelector(".quizz-levels-number").value)),
+  });
   checkQuizzValues(quizzArray);
 }
 
 function hideAlerts() {
-  let alertsShown = document.querySelectorAll('.alert');
+  let alertsShown = document.querySelectorAll(".alert");
   for (let i = 0; i < alertsShown.length; i++) {
-    alertsShown[i].classList.add('hide');
+    alertsShown[i].classList.add("hide");
   }
 }
 
@@ -54,19 +51,19 @@ function checkQuizzValues(quizz) {
   let verificationArray = [];
   if (quizz[0].title === false) {
     verificationArray.push(false);
-    document.querySelector('.alert.quizz-title').classList.remove('hide');
+    document.querySelector(".alert.quizz-title").classList.remove("hide");
   }
   if (quizz[0].image === false) {
     verificationArray.push(false);
-    document.querySelector('.alert.quizz-image').classList.remove('hide');
+    document.querySelector(".alert.quizz-image").classList.remove("hide");
   }
   if (quizz[0].questions === false) {
     verificationArray.push(false);
-    document.querySelector('.alert.quizz-question-number').classList.remove('hide');
+    document.querySelector(".alert.quizz-question-number").classList.remove("hide");
   }
   if (quizz[0].levels === false) {
     verificationArray.push(false);
-    document.querySelector('.alert.quizz-levels-number').classList.remove('hide');
+    document.querySelector(".alert.quizz-levels-number").classList.remove("hide");
   }
   if (verificationArray.length === 0) {
     loadQuizzQuestions();
@@ -104,18 +101,18 @@ function verifyLevelNumber(levels) {
 }
 
 function loadQuizzQuestions() {
-  document.querySelector('main').innerHTML = `    <div class="quizz-questions">
+  document.querySelector("main").innerHTML = `    <div class="quizz-questions">
   <h2>Crie suas perguntas</h2>
   <div class="all-questions">
   </div>
   <button onclick="getValuesQuestions()"> Prosseguir para criar níveis</button>
 </div>
-  `
-  let createQuestions = document.querySelector('.all-questions')
+  `;
+  let createQuestions = document.querySelector(".all-questions");
   for (let i = 0; i < quizzArray[0].questions; i++) {
-    createQuestions.innerHTML += `        <div class="question number${(i + 1)} expand">
+    createQuestions.innerHTML += `        <div class="question number${i + 1} expand">
     <div>
-    <h3>Pergunta ${(i + 1)}</h3>
+    <h3>Pergunta ${i + 1}</h3>
     <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
     </div>
     <input class="question-title" type="text" placeholder="Texto da pergunta">
@@ -140,33 +137,32 @@ function loadQuizzQuestions() {
     <p class="alert answer3 hide">A resposta não pode ser vazia</p>
     <input class="answer3-image" type="text" placeholder="URL da imagem 3">
     <p class="alert answer3-image hide">Valor informado não é uma URL válida</p>
-  </div>`
+  </div>`;
   }
-  document.querySelector('.number1').classList.remove('expand');
-  document.querySelector('.number1 ion-icon').classList.add('hide')
+  document.querySelector(".number1").classList.remove("expand");
+  document.querySelector(".number1 ion-icon").classList.add("hide");
 }
 
 function verifyHexColor(color) {
-  if (/^#[0-9A-F]{6}$/i.test(color)) {
+  if (/^#[0-9A-Fa-f]{6}$/i.test(color)) {
     return color;
   }
   return false;
 }
 
 function expand(element) {
-  document.querySelector('ion-icon.hide').classList.remove('hide')
-  let expandAllQuestions = document.querySelectorAll('.question')
+  document.querySelector("ion-icon.hide").classList.remove("hide");
+  let expandAllQuestions = document.querySelectorAll(".question");
   for (let i = 0; i < expandAllQuestions.length; i++) {
-    expandAllQuestions[i].classList.add('expand')
+    expandAllQuestions[i].classList.add("expand");
   }
-  let expandAllLevels = document.querySelectorAll('.level')
+  let expandAllLevels = document.querySelectorAll(".level");
   for (let i = 0; i < expandAllLevels.length; i++) {
-    expandAllLevels[i].classList.add('expand')
+    expandAllLevels[i].classList.add("expand");
   }
   let selectExpand = element.parentNode.parentNode;
-  selectExpand.classList.remove('expand')
-  element.classList.add('hide')
-
+  selectExpand.classList.remove("expand");
+  element.classList.add("hide");
 }
 
 function verifyQuestionTitle(titulo) {
@@ -193,8 +189,8 @@ function getValuesQuestions() {
           image: verifyURL(document.querySelector(`.number${i + 1} .answer1-image`).value),
           isCorrectAnswer: false,
         },
-      ]
-    })
+      ],
+    });
   }
   verifyQuestionAnswers(question);
   checkQuestionValues(question);
@@ -202,45 +198,50 @@ function getValuesQuestions() {
 
 function verifyQuestionAnswers(question) {
   for (let i = 0; i < question.length; i++)
-    if (question[i].answers[1].text.trim() !== '' && (document.querySelector(`.number${i + 1} .answer2`).value.trim() !== '') || (document.querySelector(`.number${i + 1} .answer2-image`).value.trim() !== '')) {
+    if (
+      (question[i].answers[1].text.trim() !== "" &&
+        document.querySelector(`.number${i + 1} .answer2`).value.trim() !== "") ||
+      document.querySelector(`.number${i + 1} .answer2-image`).value.trim() !== ""
+    ) {
       question[i].answers.push({
         text: document.querySelector(`.number${i + 1} .answer2`).value,
         image: verifyURL(document.querySelector(`.number${i + 1} .answer2-image`).value),
         isCorrectAnswer: false,
-      },
-      )
-      if (question[i].answers[2].text.trim() !== '' && (document.querySelector(`.number${i + 1} .answer3`).value.trim() !== '') || (document.querySelector(`.number${i + 1} .answer3-image`).value.trim() !== '')) {
+      });
+      if (
+        (question[i].answers[2].text.trim() !== "" &&
+          document.querySelector(`.number${i + 1} .answer3`).value.trim() !== "") ||
+        document.querySelector(`.number${i + 1} .answer3-image`).value.trim() !== ""
+      ) {
         question[i].answers.push({
           text: document.querySelector(`.number${i + 1} .answer3`).value,
           image: verifyURL(document.querySelector(`.number${i + 1} .answer3-image`).value),
           isCorrectAnswer: false,
-        },
-        )
+        });
       }
     }
 }
 
-
 function checkQuestionValues(question) {
-  hideAlerts()
+  hideAlerts();
   let verificationArray = [];
   for (let i = 0; i < question.length; i++) {
     if (question[i].title === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.question-title`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.question-title`).classList.remove("hide");
     }
     if (question[i].color === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.question-color`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.question-color`).classList.remove("hide");
     }
     for (let j = 0; j < question[i].answers.length; j++) {
-      if (question[i].answers[j].text.trim() === '') {
+      if (question[i].answers[j].text.trim() === "") {
         verificationArray.push(false);
-        document.querySelector(`.number${i + 1} .alert.answer${j}`).classList.remove('hide');
+        document.querySelector(`.number${i + 1} .alert.answer${j}`).classList.remove("hide");
       }
       if (question[i].answers[j].image === false) {
         verificationArray.push(false);
-        document.querySelector(`.number${i + 1} .alert.answer${j}-image`).classList.remove('hide');
+        document.querySelector(`.number${i + 1} .alert.answer${j}-image`).classList.remove("hide");
       }
     }
   }
@@ -249,22 +250,21 @@ function checkQuestionValues(question) {
   }
 }
 
-
 function loadQuizzLevels() {
-  document.querySelector('main').innerHTML = `
+  document.querySelector("main").innerHTML = `
   <div class="quizz-levels">
   <h2>Agora, decida os níveis!</h2>
   <div class="all-levels">
   </div>
   <button onclick="getValuesLevels()"> Finalizar Quizz</button>
 </div>
-  `
-  let createLevels = document.querySelector('.all-levels')
+  `;
+  let createLevels = document.querySelector(".all-levels");
   for (let i = 0; i < quizzArray[0].levels; i++) {
     createLevels.innerHTML += `
-    <div class="level number${(i + 1)} expand">
+    <div class="level number${i + 1} expand">
     <div>
-      <h3>Nível ${(i + 1)}</h3>
+      <h3>Nível ${i + 1}</h3>
       <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
     </div>
     <input class="level-title" type="text" placeholder="Título do Nível">
@@ -278,10 +278,10 @@ function loadQuizzLevels() {
     <input class="level-text" type="text" placeholder="Descrição do nível">
     <p class="alert level-text hide">A descrição do nível deve ter no mínimo 30 caracteres</p>
   </div>
-`
+`;
   }
-  document.querySelector('.number1').classList.remove('expand');
-  document.querySelector('.number1 ion-icon').classList.add('hide')
+  document.querySelector(".number1").classList.remove("expand");
+  document.querySelector(".number1 ion-icon").classList.add("hide");
 }
 
 function verifyLevelTitle(titulo) {
@@ -299,65 +299,71 @@ function verifyLevelText(text) {
 }
 
 function verifyLevelPercentage(percentage) {
-  if (percentage === '' || isNaN(Number(percentage)) || Number(percentage) < 0 || Number(percentage) > 100) {
+  if (percentage === "") {
     return false;
   }
-  return Number(percentage);
+
+  const number = Number(percentage);
+  if (isNaN(number) || number < 0 || number > 100) {
+    return false;
+  }
+
+  return number;
 }
 
 function getValuesLevels() {
   levelsArray = [];
   for (let i = 0; i < quizzArray[0].levels; i++) {
-    levelsArray.push(
-      {
-        title: verifyLevelTitle(document.querySelector(`.number${i + 1} .level-title`).value.trim()),
-        image: verifyURL(document.querySelector(`.number${i + 1} .level-image`).value),
-        text: verifyLevelText(document.querySelector(`.number${i + 1} .level-text`).value.trim()),
-        minValue: verifyLevelPercentage(document.querySelector(`.number${i + 1} .level-percentage`).value.trim()),
-      }
-    )
+    levelsArray.push({
+      title: verifyLevelTitle(document.querySelector(`.number${i + 1} .level-title`).value.trim()),
+      image: verifyURL(document.querySelector(`.number${i + 1} .level-image`).value),
+      text: verifyLevelText(document.querySelector(`.number${i + 1} .level-text`).value.trim()),
+      minValue: verifyLevelPercentage(
+        document.querySelector(`.number${i + 1} .level-percentage`).value.trim()
+      ),
+    });
   }
-  checkLevelsValues(levelsArray)
+  checkLevelsValues(levelsArray);
 }
 
 function checkLevelsValues(levels) {
   hideAlerts();
   let verificationArray = [];
-  let verificationLevelArray = []
-  let verificationLevelZero = []
+  let verificationLevelArray = [];
+  let verificationLevelZero = [];
   for (let i = 0; i < levels.length; i++) {
     if (levels[i].title === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.level-title`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.level-title`).classList.remove("hide");
     }
     if (levels[i].image === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.level-image`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.level-image`).classList.remove("hide");
     }
     if (levels[i].text === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.level-text`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.level-text`).classList.remove("hide");
     }
     if (levels[i].minValue === false) {
       verificationArray.push(false);
-      document.querySelector(`.number${i + 1} .alert.level-percentage`).classList.remove('hide');
+      document.querySelector(`.number${i + 1} .alert.level-percentage`).classList.remove("hide");
     }
   }
   for (let i = 0; i < levels.length; i++) {
     for (let j = i + 1; j < levels.length; j++)
       if (levels[i].minValue === levels[j].minValue) {
         verificationLevelArray.push(false);
-        document.querySelector(`.number${i + 1} .level-percentage-repeat`).classList.remove('hide');
-        document.querySelector(`.number${j + 1} .level-percentage-repeat`).classList.remove('hide');
+        document.querySelector(`.number${i + 1} .level-percentage-repeat`).classList.remove("hide");
+        document.querySelector(`.number${j + 1} .level-percentage-repeat`).classList.remove("hide");
       }
     if (levels[i].minValue === 0) {
-      verificationLevelZero.push(true)
+      verificationLevelZero.push(true);
     }
   }
   if (verificationLevelZero.length === 0) {
-    document.querySelector('.level-percentage-no-zero').classList.remove('hide');
+    document.querySelector(".level-percentage-no-zero").classList.remove("hide");
   } else if (verificationLevelZero.length > 1) {
-    alert('Tem mais de um nível com porcentagem 0')
+    alert("Tem mais de um nível com porcentagem 0");
   } else if (verificationLevelZero.length === 1) {
     if (verificationArray.length === 0 && verificationLevelArray.length === 0) {
       getQuizzDone();
@@ -405,9 +411,6 @@ function renderSucessPage(image, title, id) {
     </div>
   `;
 }
-
-
-// TODO: deletar o conteúdo da variável abaixo quando possível
 
 // renderCreateQuiz();
 //saveQuizz();

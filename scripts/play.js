@@ -108,15 +108,15 @@ function renderScore() {
 }
 
 function getScore() {
-  console.log(Math.round((quizScore * 100) / quizSize))
   return Math.round((quizScore * 100) / quizSize);
 }
 
 function getLevel(score) {
-  levels.sort((a, b) => b.minValue - a.minValue);
-  let level;
-  for (let i = levels.length - 1; i >= 0; i--) {
-    if (score < levels) {
+  levels.sort((a, b) => a.minValue - b.minValue);
+  console.log(levels);
+  let level = levels[0];
+  for (let i = 1; i < levels.length; i++) {
+    if (score < levels[i].minValue) {
       return level;
     }
 
@@ -135,3 +135,4 @@ let quizSize = null;
 let quests = null;
 let levels = null;
 
+playQuiz(260);
