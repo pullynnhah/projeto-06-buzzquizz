@@ -85,6 +85,7 @@ function renderScore() {
   const finalLevel = getLevel(finalScore);
   playContainer.innerHTML += `
     <div class="quiz-result">
+    <div class="background-result">
       <div class="quiz-result-header">
         <h2>${finalScore}% de acerto: ${finalLevel.title}</h2>
       </div>
@@ -92,7 +93,8 @@ function renderScore() {
         <img src="${finalLevel.image}" />
         <p>${finalLevel.text}</p>
       </div>
-      
+    </div>
+
       <div class="play-btns">
         <div class="play-btn red-btn" onclick="playQuiz(${currentQuizId})">Reiniciar Quizz</div>
         <div class="play-btn white-btn" onclick="getQuizzes()">Voltar pra home</div>
@@ -106,6 +108,7 @@ function renderScore() {
 }
 
 function getScore() {
+  console.log(Math.round((quizScore * 100) / quizSize))
   return Math.round((quizScore * 100) / quizSize);
 }
 

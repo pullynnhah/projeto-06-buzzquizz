@@ -8,7 +8,8 @@
 }
 
 .quizz-start h2,
-.quizz-questions h2 {
+.quizz-questions h2,
+.quizz-levels h2 {
   font-size: 20px;
   text-align: center;
   font-weight: 700;
@@ -17,7 +18,7 @@
 
 .basic-informations {
   width: 100%;
-  margin: 20px auto;
+  margin: 30px auto;
   padding: 20px;
   display: flex;
   flex-wrap: nowrap;
@@ -29,8 +30,9 @@
 }
 
 .basic-informations input,
-.question input {
-  width: 340px;
+.question input,
+.level input {
+  width: 100%;
   height: 45px;
   border: 1px solid #D1D1D1;
   border-radius: 5px;
@@ -40,13 +42,16 @@
 }
 
 .basic-informations input::placeholder,
-.question input::placeholder {
+.question input::placeholder,
+.level input::placeholder {
   font-style: italic;
+  color: #D1D1D1;
 }
 
 .quizz-start button,
-.quizz-questions button {
-  width: 340px;
+.quizz-questions button,
+.quizz-levels button {
+  width: 80%;
   height: 55px;
   font-size: 18px;
   color: #FFFFFF;
@@ -54,12 +59,15 @@
   text-align: center;
   border-radius: 15px;
   cursor: pointer;
+  margin-bottom: 50px;
 }
 
 .alert {
-  font-size: 14px;
-  font-weight: 700;
-  color: red;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  color: #EC362D;
+  margin: 0 15px 10px 20px;
 }
 
 .hide {
@@ -68,18 +76,25 @@
 
 /* ==================== QUIZZ CREATE PAGE 2 ====================*/
 
-.quizz-questions {
+.quizz-questions,
+.quizz-levels {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.question {
+.all-questions,
+.all-levels {
   width: 100%;
-  margin: 20px auto;
-  padding: 20px;
+  height: auto;
+}
+
+.question,
+.level {
+  width: 100%;
+  margin: 30px auto;
+  padding: 0 20px;
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -88,15 +103,43 @@
   text-align: left;
 }
 
-.question h3 {
+.expand {
+  height: 74px;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+
+.question :first-child,
+.level :first-child {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question h3,
+.level h3 {
+  width: 100%;
   font-size: 20px;
   font-weight: 700;
-  text-align: left;
+  margin: 27px 0;
+}
+
+.level .level-text {
+  height: 180px;
+  margin-bottom: 25px;
 }
 
 .quizz-sucess {
-  width: 340px;
-  margin: 108px auto;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.question ion-icon,
+.level ion-icon {
+  font-size: 26px;
+  color: #000000;
+  cursor: pointer;
 }
 
 .quizz-sucess h2 {
@@ -137,13 +180,39 @@
   cursor: pointer;
 }
 
-.hide {
-  display: none;
-}
+/* ==================== MEDIA QUERY ====================*/
 
 @media (min-width: 1100px) {
+
+  .basic-informations,
+  .question,
+  .level {
+    width: 600px;
+  }
+
+  .basic-informations input,
+  .question input,
+  .level input {
+    width: 565px;
+  }
+
+  .quizz-start button,
+  .quizz-questions button,
+  .quizz-levels button {
+    width: 370px
+  }
+
+  .alert,
+  .question :first-child,
+  .level :first-child,
+  .question h3,
+  .level h3 {
+    width: 565px;
+  }
+
   .quizz-sucess {
     width: 500px;
+    margin: auto;
   }
 
   .quizz-sucess .gradient {
