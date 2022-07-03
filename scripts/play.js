@@ -72,7 +72,7 @@ function selectAnswer(element) {
 
     if (++quizAnswerCount < quizSize) {
       console.log(quizAnswerCount);
-      setTimeout(() => quests[quizAnswerCount - 1].scrollIntoView(), 2000);
+      setTimeout(() => quests[quizAnswerCount].scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }), 2000);
     } else {
       setTimeout(renderScore, 2000);
     }
@@ -104,7 +104,7 @@ function renderScore() {
   `;
 
   const quizResult = document.querySelector(".quiz-result");
-  quizResult.scrollIntoView();
+  quizResult.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
 }
 
 function getScore() {
@@ -113,7 +113,7 @@ function getScore() {
 
 function getLevel(score) {
   levels.sort((a, b) => a.minValue - b.minValue);
-  
+
   let level = levels[0];
   for (let i = 1; i < levels.length; i++) {
     if (score < levels[i].minValue) {

@@ -90,6 +90,7 @@
   font-size: 13px;
   line-height: 15px;
   margin-top: 6px;
+  word-break: break-word;
 }
 
 .quiz.open .answer p {
@@ -147,7 +148,7 @@
   font-size: 17px;
   line-height: 20px;
   color: #484848;
-  /* word-break: break-all; */
+  word-break: break-word;
 }
 
 .play-btns {

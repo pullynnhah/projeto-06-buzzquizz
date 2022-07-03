@@ -213,7 +213,6 @@ function expand(element) {
   let selectExpand = element.parentNode.parentNode;
   selectExpand.classList.remove("expand");
   element.classList.add("hide");
-
 }
 
 function verifyQuestionTitle(titulo) {
