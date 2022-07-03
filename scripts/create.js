@@ -53,8 +53,14 @@ function getValuesQuizz() {
 
 function hideAlerts() {
   let alertsShown = document.querySelectorAll(".alert");
+  let errorShown = document.querySelectorAll('.error');
   for (let i = 0; i < alertsShown.length; i++) {
     alertsShown[i].classList.add("hide");
+  }
+  if (errorShown.length !== 0) {
+    for (let i = 0; i < errorShown.length; i++) {
+      errorShown[i].classList.remove('error');
+    }
   }
 }
 
@@ -64,18 +70,22 @@ function checkQuizzValues(quizz) {
   if (quizz[0].title === false) {
     verificationArray.push(false);
     document.querySelector(".alert.quizz-title").classList.remove("hide");
+    document.querySelector("input.quizz-title").classList.add("error");
   }
   if (quizz[0].image === false) {
     verificationArray.push(false);
     document.querySelector(".alert.quizz-image").classList.remove("hide");
+    document.querySelector("input.quizz-image").classList.add("error");
   }
   if (quizz[0].questions === false) {
     verificationArray.push(false);
     document.querySelector(".alert.quizz-question-number").classList.remove("hide");
+    document.querySelector("input.quizz-question-number").classList.add("error");
   }
   if (quizz[0].levels === false) {
     verificationArray.push(false);
     document.querySelector(".alert.quizz-levels-number").classList.remove("hide");
+    document.querySelector("input.quizz-levels-number").classList.add("error");
   }
   if (verificationArray.length === 0) {
     loadQuizzQuestions();
@@ -203,6 +213,7 @@ function expand(element) {
   let selectExpand = element.parentNode.parentNode;
   selectExpand.classList.remove("expand");
   element.classList.add("hide");
+
 }
 
 function verifyQuestionTitle(titulo) {
@@ -269,19 +280,23 @@ function checkQuestionValues(question) {
     if (question[i].title === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.question-title`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} input.question-title`).classList.add("error");
     }
     if (question[i].color === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.question-color`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} input.question-color`).classList.add("error");
     }
     for (let j = 0; j < question[i].answers.length; j++) {
       if (question[i].answers[j].text.trim() === "") {
         verificationArray.push(false);
         document.querySelector(`.number${i + 1} .alert.answer${j}`).classList.remove("hide");
+        document.querySelector(`.number${i + 1} input.answer${j}`).classList.add("error");
       }
       if (question[i].answers[j].image === false) {
         verificationArray.push(false);
         document.querySelector(`.number${i + 1} .alert.answer${j}-image`).classList.remove("hide");
+        document.querySelector(`.number${i + 1} input.answer${j}-image`).classList.add("error");
       }
     }
   }
@@ -315,7 +330,7 @@ function loadQuizzLevels() {
         <p class="alert level-percentage-repeat hide">Não pode haver mais de um valor igual</p>
         <input class="level-image" type="text" placeholder="URL da imagem do nível">
         <p class="alert level-image hide">Valor informado não é uma URL válida</p>
-        <input class="level-text" type="text" placeholder="Descrição do nível">
+        <textarea class="level-text" type="text" placeholder="Descrição do nível"></textarea>
         <p class="alert level-text hide">A descrição do nível deve ter no mínimo 30 caracteres</p>
       </div>
     `;
@@ -393,18 +408,22 @@ function checkLevelsValues(levels) {
     if (levels[i].title === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.level-title`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} input.level-title`).classList.add("error");
     }
     if (levels[i].image === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.level-image`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} input.level-image`).classList.add("error");
     }
     if (levels[i].text === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.level-text`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} textarea.level-text`).classList.add("error");
     }
     if (levels[i].minValue === false) {
       verificationArray.push(false);
       document.querySelector(`.number${i + 1} .alert.level-percentage`).classList.remove("hide");
+      document.querySelector(`.number${i + 1} input.level-percentage`).classList.add("error");
     }
   }
   for (let i = 0; i < levels.length; i++) {
@@ -412,7 +431,9 @@ function checkLevelsValues(levels) {
       if (levels[i].minValue === levels[j].minValue) {
         verificationLevelArray.push(false);
         document.querySelector(`.number${i + 1} .level-percentage-repeat`).classList.remove("hide");
+        document.querySelector(`.number${i + 1} input.level-percentage`).classList.add("error");
         document.querySelector(`.number${j + 1} .level-percentage-repeat`).classList.remove("hide");
+        document.querySelector(`.number${j + 1} input.level-percentage`).classList.add("error")
       }
     if (levels[i].minValue === 0) {
       verificationLevelZero.push(true);
@@ -420,6 +441,7 @@ function checkLevelsValues(levels) {
   }
   if (verificationLevelZero.length === 0) {
     document.querySelector(".level-percentage-no-zero").classList.remove("hide");
+    document.querySelector('input').classList.add("error");
   } else if (verificationLevelZero.length > 1) {
     alert("Tem mais de um nível com porcentagem 0");
   } else if (verificationLevelZero.length === 1) {
@@ -444,7 +466,7 @@ function saveQuizz() {
   if (updateQuizz) {
     const key = load()[updateQuizz.id];
     const promise = axios.put(`${URI}/${updateQuizz.id}`, userQuiz, {
-      headers: {"Secret-Key": key},
+      headers: { "Secret-Key": key },
     });
     promise.then(response => alert("Seu quizz foi atualizado com sucesso!"));
     promise.catch(error => alert("Esse quizz não pertence a você!"));

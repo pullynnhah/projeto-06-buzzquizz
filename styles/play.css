@@ -107,7 +107,6 @@
 .quiz-result {
   width: 100%;
   margin: 0 auto;
-  padding: 18px;
 }
 
 .background-result {
@@ -132,6 +131,7 @@
 }
 
 .result {
+  padding: 20px;
   margin-bottom: 50px;
 }
 
