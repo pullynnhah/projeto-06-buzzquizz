@@ -6,5 +6,3 @@ function renderLoading() {
     </div>
   `;
 }
-
-// renderLoading();

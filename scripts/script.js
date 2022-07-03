@@ -9,6 +9,12 @@ function dump(key, value) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 }
 
+function remove(key) {
+  const data = load();
+  delete data[key];
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+}
+
 const URI = "https://mock-api.driven.com.br/api/v7/buzzquizz";
 const LOCAL_STORAGE_KEY = "buzz-quizz";
 const main = document.querySelector("main");

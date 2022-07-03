@@ -66,7 +66,7 @@
 }
 
 .quiz-header ion-icon:hover {
-  color: #9D0101;
+  color: #9d0101;
   cursor: pointer;
 }
 
@@ -82,11 +82,7 @@
   height: 181px;
   position: relative;
   border-radius: 5px;
-}
-
-.quiz-container .gradient:hover {
   cursor: pointer;
-  filter: brightness(1.5);
 }
 
 .image {
@@ -109,10 +105,12 @@
   top: 0;
   left: 0;
 
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(0, 0, 0, 0.5) 65.62%,
-      rgba(0, 0, 0, 0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.5) 65.62%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
   border-radius: 5px;
 }
 
@@ -125,6 +123,32 @@
   left: 15px;
   right: 15px;
   word-break: break-all;
+}
+
+.modify {
+  width: 43px;
+  height: 87px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  position: absolute;
+  top: 11px;
+  right: 0;
+
+  background-color: #ec362d;
+  border-radius: 10px 0 0 11px;
+}
+
+.modify ion-icon {
+  width: 18px;
+  color: white;
+}
+
+.modify ion-icon:hover {
+  color: black;
 }
 
 @media (min-width: 1100px) {

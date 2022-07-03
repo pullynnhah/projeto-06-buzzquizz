@@ -14,7 +14,7 @@ function userQuizzesHTML(quizArray) {
           <h2>Seus Quizzes</h2>
           <ion-icon onclick="renderCreateQuiz()" name="add-circle"></ion-icon>
         </div>
-        ${quizzesHTML(quizArray)}
+        ${quizzesHTML(quizArray, true)}
       </div>
     `;
   }
@@ -33,13 +33,22 @@ function generalQuizzesHTML(quizArray) {
   `;
 }
 
-function quizzesHTML(quizArray) {
+function quizzesHTML(quizArray, isYours = true) {
   const reducedHTML = quizArray.reduce((ac, quiz) => {
+    let div = "";
+    if (isYours) {
+      div = `
+      <div class="modify">
+        <ion-icon onclick="edit(${quiz.id})" name="create-outline"></ion-icon>
+        <ion-icon onclick="del(${quiz.id})" name="trash-outline"></ion-icon>
+      </div>`;
+    }
     const html = `
-      <div class="gradient" onclick="playQuiz(${quiz.id})">
+      <div class="gradient">
         <div class="image">
           <img src="${quiz.image}" />
-          <div class="overlay"></div>    
+          <div class="overlay" onclick="playQuiz(${quiz.id})"></div>  
+          ${div}  
         </div>
         <p>${quiz.title}</p>
       </div>
@@ -68,6 +77,21 @@ function getQuizzes() {
   renderLoading();
   const promise = axios.get(`${URI}/quizzes`);
   promise.then(response => renderQuizzes(response.data));
+}
+
+function edit(id) {}
+
+function del(id) {
+  if (confirm("Deseja excluir esse quizz?")) {
+    const data = load();
+    const key = data[id];
+    if (key !== undefined) {
+      renderLoading();
+      const promise = axios.delete(`${URI}/${id}`, {headers: {"Secret-Key": key}});
+    } else {
+      alert("Esse quizz não pertence a você!");
+    }
+  }
 }
 
 getQuizzes();
