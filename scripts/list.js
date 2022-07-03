@@ -95,6 +95,8 @@ function del(id) {
     if (key !== undefined) {
       renderLoading();
       const promise = axios.delete(`${URI}/${id}`, {headers: {"Secret-Key": key}});
+      promise.then(response => window.location.reload());
+      pormise.catch(error => alert("Esse quizz não pertence a você!"));
     } else {
       alert("Esse quizz não pertence a você!");
     }

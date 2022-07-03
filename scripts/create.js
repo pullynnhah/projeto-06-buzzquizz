@@ -475,7 +475,7 @@ function renderSucessPage(image, title, id) {
       </div>
     </div>
   `;
+  updateQuizz = null;
 }
 
 let userQuiz;
-

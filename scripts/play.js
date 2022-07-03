@@ -135,4 +135,3 @@ let quizSize = null;
 let quests = null;
 let levels = null;
 
-// playQuiz(260);
