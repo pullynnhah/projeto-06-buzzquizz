@@ -19,13 +19,22 @@ function renderCreateQuiz() {
       <button onclick="getValuesQuizz()">Prosseguir para criar perguntas</button>
     </div>
   `;
+  
+  if (updateQuizz !== null) {
+    fillCreateQuiz();
+  }
 }
 
-function clearValues() {
-  document.querySelector(".quizz-title").value = "";
-  document.querySelector(".quizz-image").value = "";
-  document.querySelector(".quizz-question-number").value = "";
-  document.querySelector(".quizz-levels-number").value = "";
+function fillCreateQuiz() {
+  const title = document.querySelector('.quizz-title');
+  const image = document.querySelector('.quizz-image');
+  const nQuestions = document.querySelector('.quizz-question-number');
+  const nLevels = document.querySelector('.quizz-levels-number');
+  
+  title.value = updateQuizz.title;
+  image.value = updateQuizz.image;
+  nQuestions.value = updateQuizz.questions.length;
+  nLevels.value = updateQuizz.levels.length;
 }
 
 function getValuesQuizz() {
@@ -110,41 +119,59 @@ function loadQuizzQuestions() {
   `;
   let createQuestions = document.querySelector(".all-questions");
   for (let i = 0; i < quizzArray[0].questions; i++) {
-    createQuestions.innerHTML += `        <div class="question number${i + 1} expand">
-    <div>
-    <h3>Pergunta ${i + 1}</h3>
-    <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
-    </div>
-    <input class="question-title" type="text" placeholder="Texto da pergunta">
-    <p class="alert question-title hide">O título da pergunta deve ter no mínimo 20 caracteres</p>
-    <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
-    <p class="alert question-color hide">A cor da pergunta deve ter o formato HEX</p>
-    <h3>Resposta Correta</h3>
-    <input class="answer0" type="text" placeholder="Resposta correta">
-    <p class="alert answer0 hide">A resposta correta não pode ser vazia</p>
-    <input class="answer0-image" type="text" placeholder="URL da imagem">
-    <p class="alert answer0-image hide">Valor informado não é uma URL válida</p>
-    <h3>Respostas incorretas</h3>
-    <input class="answer1" type="text" placeholder="Resposta incorreta 1">
-    <p class="alert answer1 hide">Deve haver pelo menos uma resposta errada</p>
-    <input class="answer1-image" type="text" placeholder="URL da imagem 1">
-    <p class="alert answer1-image hide">Valor informado não é uma URL válida</p>
-    <input class="answer2" type="text" placeholder="Resposta incorreta 2">
-    <p class="alert answer2 hide">A resposta não pode ser vazia</p>
-    <input class="answer2-image" type="text" placeholder="URL da imagem 2">
-    <p class="alert answer2-image hide">Valor informado não é uma URL válida</p>
-    <input class="answer3" type="text" placeholder="Resposta incorreta 3">
-    <p class="alert answer3 hide">A resposta não pode ser vazia</p>
-    <input class="answer3-image" type="text" placeholder="URL da imagem 3">
-    <p class="alert answer3-image hide">Valor informado não é uma URL válida</p>
-  </div>`;
+    createQuestions.innerHTML += `
+      <div class="question number${i + 1} expand">
+        <div>
+          <h3>Pergunta ${i + 1}</h3>
+          <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
+        </div>
+        <input class="question-title" type="text" placeholder="Texto da pergunta">
+        <p class="alert question-title hide">O título da pergunta deve ter no mínimo 20 caracteres</p>
+        <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
+        <p class="alert question-color hide">A cor da pergunta deve ter o formato HEX</p>
+        <h3>Resposta Correta</h3>
+        <input class="answer0" type="text" placeholder="Resposta correta">
+        <p class="alert answer0 hide">A resposta correta não pode ser vazia</p>
+        <input class="answer0-image" type="text" placeholder="URL da imagem">
+        <p class="alert answer0-image hide">Valor informado não é uma URL válida</p>
+        <h3>Respostas incorretas</h3>
+        <input class="answer1" type="text" placeholder="Resposta incorreta 1">
+        <p class="alert answer1 hide">Deve haver pelo menos uma resposta errada</p>
+        <input class="answer1-image" type="text" placeholder="URL da imagem 1">
+        <p class="alert answer1-image hide">Valor informado não é uma URL válida</p>
+        <input class="answer2" type="text" placeholder="Resposta incorreta 2">
+        <p class="alert answer2 hide">A resposta não pode ser vazia</p>
+        <input class="answer2-image" type="text" placeholder="URL da imagem 2">
+        <p class="alert answer2-image hide">Valor informado não é uma URL válida</p>
+        <input class="answer3" type="text" placeholder="Resposta incorreta 3">
+        <p class="alert answer3 hide">A resposta não pode ser vazia</p>
+        <input class="answer3-image" type="text" placeholder="URL da imagem 3">
+        <p class="alert answer3-image hide">Valor informado não é uma URL válida</p>
+      </div>`;
   }
   document.querySelector(".number1").classList.remove("expand");
   document.querySelector(".number1 ion-icon").classList.add("hide");
 }
 
+function fillQuizzQuestions() {
+  const title = document.querySelector('.question-title');
+  const color = document.querySelector('.question-color');
+  const answer0 = document.querySelector('.answer0');
+  const answer0Image = document.querySelector('.answer0-image');
+  // TODO: needs fixing
+  
+  
+  const index = updateQuizz.questions.answers.findIndex(answer => answer.isCorrectAnswer);
+  answer0.value = updateQuizz.questions.answers[index].text;
+  answer0Image.value = updateQuizz.questions.answers[index].image;
+  
+  const wrongAnswers = questions.answers.filter(answer => !answer.isCorrectAnswer);
+  fori
+  
+}
+
 function verifyHexColor(color) {
-  if (/^#[0-9A-Fa-f]{6}$/i.test(color)) {
+  if (/^#[\dA-Fa-f]{6}$/i.test(color)) {
     return color;
   }
   return false;
