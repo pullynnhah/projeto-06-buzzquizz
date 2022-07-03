@@ -57,6 +57,7 @@
   font-weight: 700;
   font-size: 19px;
   line-height: 22px;
+  text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
 }
 
 .answers-container {
