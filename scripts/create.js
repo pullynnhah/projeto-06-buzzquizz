@@ -66,17 +66,17 @@ function verifyLevelNumber() {
 }
 
 function loadQuizzQuestions() {
-  document.querySelector('main').innerHTML = `    <div class="quizz-questions">
+  document.querySelector("main").innerHTML = `    <div class="quizz-questions">
   <h2>Crie suas perguntas</h2>
   <div class="all-questions">
   </div>
   <button> Prosseguir para criar níveis</button>
 </div>
-  `
-  let createQuestions = document.querySelector('.all-questions')
+  `;
+  let createQuestions = document.querySelector(".all-questions");
   for (let i = 0; i < quizzQuestionNumber; i++) {
     createQuestions.innerHTML += `        <div class="question">
-    <h3>Pergunta ${(i + 1)}</h3>
+    <h3>Pergunta ${i + 1}</h3>
     <input class="question-title" type="text" placeholder="Texto da pergunta">
     <input class="question-color" type="text" placeholder="Cor de fundo da pergunta">
     <h3>Resposta Correta</h3>
@@ -89,7 +89,7 @@ function loadQuizzQuestions() {
     <input class="wrong-answer-image" type="text" placeholder="URL da imagem 2">
     <input class="wrong-answer" type="text" placeholder="Resposta incorreta 3">
     <input class="wrong-answer-image" type="text" placeholder="URL da imagem 3">
-  </div>`
+  </div>`;
   }
 }
 
@@ -124,7 +124,7 @@ function renderSucessPage(image, title, id) {
 
 let quizzTitle = null;
 let quizzImage = null;
-let quizzQuestionNumber = null;
+let quizzQuestionNumber = 3;
 
 // TODO: deletar o conteúdo da variável abaixo quando possível
 let userQuiz = {
@@ -196,5 +196,6 @@ let userQuiz = {
   ],
 };
 
-renderCreateQuiz();
+loadQuizzQuestions();
+// renderCreateQuiz();
 // saveQuizz();
