@@ -113,7 +113,7 @@ function getScore() {
 
 function getLevel(score) {
   levels.sort((a, b) => a.minValue - b.minValue);
-  console.log(levels);
+  
   let level = levels[0];
   for (let i = 1; i < levels.length; i++) {
     if (score < levels[i].minValue) {
