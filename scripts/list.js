@@ -33,7 +33,7 @@ function generalQuizzesHTML(quizArray) {
   `;
 }
 
-function quizzesHTML(quizArray, isYours = true) {
+function quizzesHTML(quizArray, isYours = false) {
   const reducedHTML = quizArray.reduce((ac, quiz) => {
     let div = "";
     if (isYours) {
