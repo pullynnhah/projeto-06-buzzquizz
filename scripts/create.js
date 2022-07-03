@@ -9,10 +9,13 @@ function renderCreateQuiz() {
       <div class="basic-informations">
         <input class="quizz-title" type="text" placeholder="Título do seu quizz">
         <p class="alert quizz-title hide">O título do quizz deve ter entre 20 a 65 caracteres</p>
+        
         <input class="quizz-image" type="text" placeholder="URL da imagem do seu quizz">
         <p class="alert quizz-image hide">Valor informado não é uma URL válida</p>
+        
         <input class="quizz-question-number" type="text" placeholder="Quantidade de perguntas do quizz">
         <p class="alert quizz-question-number hide">O quizz deve ter no mínimo 3 perguntas</p>
+        
         <input class="quizz-levels-number" type="text" placeholder="Quantidades de níveis do quizz">
         <p class="alert quizz-levels-number hide">O quizz deve ter no mínimo 2 níveis</p>
       </div>
@@ -168,7 +171,7 @@ function fillQuizzQuestions() {
 
     title.value = updateQuizz.questions[i].title;
     color.value = updateQuizz.questions[i].color;
-    
+
     const idx = updateQuizz.questions[i].answers.findIndex(answer => answer.isCorrectAnswer);
     answer.value = updateQuizz.questions[i].answers[idx].text;
     answerImage.value = updateQuizz.questions[i].answers[idx].image;
@@ -299,26 +302,44 @@ function loadQuizzLevels() {
   let createLevels = document.querySelector(".all-levels");
   for (let i = 0; i < quizzArray[0].levels; i++) {
     createLevels.innerHTML += `
-    <div class="level number${i + 1} expand">
-    <div>
-      <h3>Nível ${i + 1}</h3>
-      <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
-    </div>
-    <input class="level-title" type="text" placeholder="Título do Nível">
-    <p class="alert level-title hide">O título do nível deve ter no mínimo 10 caracteres</p>
-    <input class="level-percentage" type="text" placeholder="% de acerto mínima">
-    <p class="alert level-percentage hide">O valor do nível deve ser um número entre 0 e 100</p>
-    <p class="alert level-percentage-no-zero hide">Deve haver pelo menos um valor zero</p>
-    <p class="alert level-percentage-repeat hide">Não pode haver mais de um valor igual</p>
-    <input class="level-image" type="text" placeholder="URL da imagem do nível">
-    <p class="alert level-image hide">Valor informado não é uma URL válida</p>
-    <input class="level-text" type="text" placeholder="Descrição do nível">
-    <p class="alert level-text hide">A descrição do nível deve ter no mínimo 30 caracteres</p>
-  </div>
-`;
+      <div class="level number${i + 1} expand">
+        <div>
+          <h3>Nível ${i + 1}</h3>
+          <ion-icon onclick="expand(this)" name="create-outline"></ion-icon>
+        </div>
+        <input class="level-title" type="text" placeholder="Título do Nível">
+        <p class="alert level-title hide">O título do nível deve ter no mínimo 10 caracteres</p>
+        <input class="level-percentage" type="text" placeholder="% de acerto mínima">
+        <p class="alert level-percentage hide">O valor do nível deve ser um número entre 0 e 100</p>
+        <p class="alert level-percentage-no-zero hide">Deve haver pelo menos um valor zero</p>
+        <p class="alert level-percentage-repeat hide">Não pode haver mais de um valor igual</p>
+        <input class="level-image" type="text" placeholder="URL da imagem do nível">
+        <p class="alert level-image hide">Valor informado não é uma URL válida</p>
+        <input class="level-text" type="text" placeholder="Descrição do nível">
+        <p class="alert level-text hide">A descrição do nível deve ter no mínimo 30 caracteres</p>
+      </div>
+    `;
   }
   document.querySelector(".number1").classList.remove("expand");
   document.querySelector(".number1 ion-icon").classList.add("hide");
+
+  if (updateQuizz) {
+    fillQuizzLevels();
+  }
+}
+
+function fillQuizzLevels() {
+  for (let i = 0; i < updateQuizz.levels.length; i++) {
+    const title = document.querySelector(`.number${i + 1} .level-title`);
+    const percentage = document.querySelector(`.number${i + 1} .level-percentage`);
+    const image = document.querySelector(`.number${i + 1} .level-image`);
+    const text = document.querySelector(`.number${i + 1} .level-text`);
+
+    title.value = updateQuizz.levels[i].title;
+    percentage.value = updateQuizz.levels[i].minValue;
+    image.value = updateQuizz.levels[i].image;
+    text.value = updateQuizz.levels[i].text;
+  }
 }
 
 function verifyLevelTitle(titulo) {
@@ -408,8 +429,6 @@ function checkLevelsValues(levels) {
   }
 }
 
-let userQuiz;
-
 function getQuizzDone() {
   userQuiz = {
     title: quizzArray[0].title,
@@ -422,12 +441,21 @@ function getQuizzDone() {
 
 function saveQuizz() {
   renderLoading();
-  const promise = axios.post(`${URI}/quizzes`, userQuiz);
-  promise.then(response => {
-    const quiz = response.data;
-    dump(quiz.id, quiz.key);
-    renderSucessPage(quiz.image, quiz.title, quiz.id);
-  });
+  if (updateQuizz) {
+    const key = load()[updateQuizz.id];
+    const promise = axios.put(`${URI}/quizzes/${updateQuizz.id}`, userQuiz, {
+      headers: {"Secret-Key": key},
+    });
+    promise.then(response => alert("Seu quizz foi atualizado com sucesso!"));
+    promise.catch(error => alert("Esse quizz não pertence a você!"));
+  } else {
+    const promise = axios.post(`${URI}/quizzes`, userQuiz);
+    promise.then(response => {
+      const quiz = response.data;
+      dump(quiz.id, quiz.key);
+      renderSucessPage(quiz.image, quiz.title, quiz.id);
+    });
+  }
 }
 
 function renderSucessPage(image, title, id) {
@@ -448,6 +476,8 @@ function renderSucessPage(image, title, id) {
     </div>
   `;
 }
+
+let userQuiz;
 
 // renderCreateQuiz();
 //saveQuizz();

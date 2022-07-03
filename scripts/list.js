@@ -88,7 +88,6 @@ function edit(id) {
   });
 }
 
-function loadBasicInfo() {}
 function del(id) {
   if (confirm("Deseja excluir esse quizz?")) {
     const data = load();
