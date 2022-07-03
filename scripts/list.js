@@ -75,13 +75,13 @@ function renderQuizzes(quizArray) {
 
 function getQuizzes() {
   renderLoading();
-  const promise = axios.get(`${URI}/quizzes`);
+  const promise = axios.get(`${URI}`);
   promise.then(response => renderQuizzes(response.data));
 }
 
 function edit(id) {
   renderLoading();
-  const promise = axios.get(`${URI}/quizzes/${id}`);
+  const promise = axios.get(`${URI}/${id}`);
   promise.then(response => {
     updateQuizz = response.data;
     renderCreateQuiz();
@@ -94,7 +94,7 @@ function del(id) {
     const key = data[id];
     if (key !== undefined) {
       renderLoading();
-      const promise = axios.delete(`${URI}/quizzes/${id}`, {headers: {"Secret-Key": key}});
+      const promise = axios.delete(`${URI}/${id}`, {headers: {"Secret-Key": key}});
     } else {
       alert("Esse quizz não pertence a você!");
     }

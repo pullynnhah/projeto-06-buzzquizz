@@ -15,6 +15,6 @@ function remove(key) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 }
 
-const URI = "https://mock-api.driven.com.br/api/v7/buzzquizz";
+const URI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes";
 const LOCAL_STORAGE_KEY = "buzz-quizz";
 const main = document.querySelector("main");

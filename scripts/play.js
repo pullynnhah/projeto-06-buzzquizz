@@ -1,6 +1,6 @@
 function playQuiz(id) {
   renderLoading();
-  const promise = axios.get(`${URI}/quizzes/${id}`);
+  const promise = axios.get(`${URI}/${id}`);
   promise.then(response => {
     renderQuiz(response.data);
   });

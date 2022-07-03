@@ -443,13 +443,13 @@ function saveQuizz() {
   renderLoading();
   if (updateQuizz) {
     const key = load()[updateQuizz.id];
-    const promise = axios.put(`${URI}/quizzes/${updateQuizz.id}`, userQuiz, {
+    const promise = axios.put(`${URI}/${updateQuizz.id}`, userQuiz, {
       headers: {"Secret-Key": key},
     });
     promise.then(response => alert("Seu quizz foi atualizado com sucesso!"));
     promise.catch(error => alert("Esse quizz não pertence a você!"));
   } else {
-    const promise = axios.post(`${URI}/quizzes`, userQuiz);
+    const promise = axios.post(URI, userQuiz);
     promise.then(response => {
       const quiz = response.data;
       dump(quiz.id, quiz.key);
@@ -479,5 +479,3 @@ function renderSucessPage(image, title, id) {
 
 let userQuiz;
 
-// renderCreateQuiz();
-//saveQuizz();
