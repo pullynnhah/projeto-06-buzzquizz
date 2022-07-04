@@ -467,7 +467,7 @@ function saveQuizz() {
     const promise = axios.put(`${URI}/${updateQuizz.id}`, userQuiz, {
       headers: { "Secret-Key": key },
     });
-    promise.then(response => alert("Seu quizz foi atualizado com sucesso!"));
+    promise.then(response => alert("Seu quizz foi atualizado com sucesso!"), getQuizzes());
     promise.catch(error => alert("Esse quizz não pertence a você!"));
   } else {
     const promise = axios.post(URI, userQuiz);
