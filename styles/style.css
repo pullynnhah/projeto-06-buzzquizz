@@ -28,7 +28,7 @@ h1 {
 }
 
 main {
-  width: 100vw;
+  width: 100%;
   height: calc(100vh - 69px);
   margin-top: 69px;
 }
